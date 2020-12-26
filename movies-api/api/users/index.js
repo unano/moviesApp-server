@@ -19,11 +19,20 @@ router.post('/', async (req, res, next) => {
     });
   }
   if (req.query.action === 'register') {
-    await User.create(req.body).catch(next);
-    res.status(201).json({
+    var reg=/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{5,}$/;
+    var result=reg.test(req.body.password);
+    if(result){
+      await User.create(req.body).catch(next);
+      res.status(201).json({
       code: 201,
       msg: 'Successful created new user.',
-    });
+    });}
+    else{
+      res.status(401).json({
+        success: false,
+        msg: 'Password is at least 5 characters long and contain at least one number and one letter.',
+      });
+    }
   } else {
     const user = await User.findByUserName(req.body.username).catch(next);
       if (!user) return res.status(401).json({ code: 401, msg: 'Authentication failed. User not found.' });
@@ -61,9 +70,12 @@ router.put('/:id',  (req, res, next) => {
 router.post('/:userName/favourites', async (req, res, next) => {
   const newFavourite = req.body.id;
   const userName = req.params.userName;
-  const movie = await movieModel.findByMovieDBId(newFavourite);
+  const movie = await movieModel.findByMovieDBId(newFavourite).catch(next);
+  if (!movie) return res.status(401).json({ code: 401, msg: 'Movie not found.' });
   const user = await User.findByUserName(userName);
   await user.favourites.push(movie._id);
+  var dedupe = require('dedupe');
+  user.favourites = dedupe(user.favourites);
   await user.save(); 
   res.status(201).json(user); 
 });

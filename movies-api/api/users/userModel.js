@@ -22,6 +22,17 @@ UserSchema.methods.comparePassword = function(passw, cb) {
   });
 };
 
+UserSchema.methods.favouritesDuplicate = function(id, cb) {
+  for(let i = 0; i < this.favourites.length; i++) {
+      bcrypt.compare(id, this.favourites[i], (err, isMatch) =>{
+        if (isMatch) {
+          return cb(null, isMatch);
+      }
+      return cb(null, isMatch);
+      });
+    }
+};
+
 UserSchema.pre('save', function(next) {
   const user = this;
   if (this.isModified('password') || this.isNew) {

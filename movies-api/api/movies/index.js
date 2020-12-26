@@ -1,6 +1,5 @@
 import express from 'express';
 import movieModel from './movieModel';
-
 import {
   getMovies, getMovie, getMovieReviews
 } from '../tmdb-api';
