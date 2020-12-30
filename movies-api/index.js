@@ -8,6 +8,7 @@ import genresRouter from './api/genres';
 import session from 'express-session';
 import passport from './authenticate';
 import {loadUsers, loadMovies} from './seedData';
+import loglevel from 'loglevel';
 
 dotenv.config();
 
@@ -20,7 +21,13 @@ const errHandler = (err, req, res, next) => {
   res.status(500).send(`Hey!! You caught the error 👍👍, ${err.stack} `);
 };
 
-if (process.env.SEED_DB) {
+if (process.env.NODE_ENV === 'test') {
+  loglevel.setLevel('warn');
+ } else {
+  loglevel.setLevel('info');
+ }
+
+if (process.env.SEED_DB === 'true' && process.env.NODE_ENV === 'development') {
   loadUsers();
   loadMovies();
 }
@@ -46,6 +53,8 @@ app.use('/api/users', usersRouter);
 app.use('/api/genres', genresRouter);
 app.use(errHandler);
 
-app.listen(port, () => {
-  console.info(`Server running at ${port}`);
+let server = app.listen(port, () => {
+  loglevel.info(`Server running at ${port}`);
 });
+
+module.exports = server;
