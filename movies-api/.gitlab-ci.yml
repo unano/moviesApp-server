@@ -21,6 +21,7 @@ stages:
   - build
   - test
   - staging
+  - deploy
 
 # Jobs:
 
@@ -53,3 +54,15 @@ deploy_staging:
   script:  
     - dpl --provider=heroku --app=$HEROKU_APP_NAME_STAGING --api-key=$HEROKU_API_KEY
     - echo "Deployed to staging server"
+
+
+deploy:
+  stage: deploy
+  only:
+    - develop
+    - master
+  script:
+    - npm i
+    # your build command
+    - npm run build
+    - npx netlify-cli deploy --site $NETLIFY_SITE_ID --auth $NETLIFY_AUTH_TOKEN --prod
