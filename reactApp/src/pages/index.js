@@ -5,9 +5,9 @@ import { PublicPage, Movies, Profile, HomePage } from "./pages";
 import LoginPage from "./loginPage";
 import SignUpPage from "./signUpPage";
 import PrivateRoute from "./privateRoute";
-import AuthHeader from "./authHeader";
-import AuthProvider from "./authContext";
-import MovieProvider from "./moviesContext";
+import AuthHeader from "../components/siteHeader/authHeader";
+import AuthProvider from "../contexts/authContext";
+import MovieProvider from "../contexts/moviesContext";
 
 const App = () => {
   return (
