@@ -1,0 +1,15 @@
+.content2{
+  width:501px;
+  height:570px;
+  margin: 0px auto;
+  padding: 15px;
+  border-radius: 3px;
+  box-shadow: 0 1px 3px rgba(18,18,18,0.4);
+}
+
+.nav-item{
+  list-style-type:none;   
+  vertical-align:middle; 
+  float:right;
+  margin-right: 17px;
+}

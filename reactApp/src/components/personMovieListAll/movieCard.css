@@ -1,0 +1,32 @@
+.infos{
+  width: 95%;
+  border-radius: 15px;
+  box-shadow: 0px 0px 3px grey;
+  font-size:8px;
+  padding:2px;
+  margin:8px;
+}
+.date{
+  font-size:15px;
+  width:6000px;
+  margin-left: 7px;
+  margin-right: 4px;
+  border-right-width: 0.2px;
+  border-color: silver;
+  border-right-style: solid;
+  padding-right: 8px;
+}
+
+.name2{
+  font-weight: 300;
+  font-size:15px;
+  padding-left: 8px;
+}
+.link{
+  color:black;
+}
+.link:hover{
+   color:rgb(0, 195, 255);
+   text-decoration: none;
+}
+

@@ -1,0 +1,10 @@
+#titles{
+    font-weight: 300;
+    font-size: 30px;
+}
+
+#button1{
+    border-radius: 5px;
+    border-color: darkturquoise;
+    background-color: white;
+}

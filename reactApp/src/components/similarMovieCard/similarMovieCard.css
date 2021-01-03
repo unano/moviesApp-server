@@ -1,0 +1,45 @@
+
+.center {
+    z-index: 1;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0px;
+    width: 98%;
+    border-radius:3px;
+  }
+#movpic2{
+  width:140px;
+  height:200px;
+}
+.similarMovie{
+  margin:7px;
+  padding-top: 2px;
+  border-width:2px;
+  border-radius:4px;
+  box-shadow:0 0 0 2px darkturquoise,10px 10px 5px grey;
+  height:250px;
+  width:155px;
+}
+.similarMovieCard{
+  margin: 7px;
+}
+
+#title2{
+  height:36px;
+  overflow:hidden;
+  text-overflow : ellipsis;
+  font-weight: 600;
+}
+
+.subheadInfo{
+  font-weight: 200;
+  font-size: 10px;
+  margin-bottom: 4px;
+  color:grey;
+  font-style: Sans-serif;
+}
+
+.card{
+  color:black
+}

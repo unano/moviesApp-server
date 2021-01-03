@@ -1,0 +1,68 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+.col-sm-2{
+  margin-bottom:10px;
+  margin-top: 15px;
+}
+.center {
+    z-index: 1;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0px;
+    width: 98%;
+    border-radius:3px;
+  }
+
+
+.pStyle1 {
+  padding: 0px;
+  margin-bottom: -32px;
+  z-index: 2;
+}
+
+.card-bodys {
+  padding: 2px;
+  margin: 0px;
+}
+
+.card-titles {
+  text-align: left;
+  font-size: 20px;
+  padding: 0px;
+  margin: 0px;
+}
+
+.vote-mark{
+  text-align: center;
+  box-shadow:0 0 0 2px floralwhite,0 0 0 4px darkturquoise;
+  width:50px;
+  height:50px;
+  font-size: larger;
+  font-weight: 300;
+  padding: 8px;
+  margin-top: -16px;
+  margin-left: -10px;
+  background-color: rgb(15, 184, 187);
+  border-style:solid;
+  border-width:0px;
+  border-radius:50px;
+  color:white;
+}
+
+.release-date{
+  color: darkgray;
+  font-size: 8px;
+  margin: 0px;
+}
+.cardOutside{
+  border-width:2px;
+  border-radius:4px;
+  box-shadow:0 0 0 2px darkturquoise,10px 10px 5px grey;
+}
+
+.card-footers{
+  color:black
+}

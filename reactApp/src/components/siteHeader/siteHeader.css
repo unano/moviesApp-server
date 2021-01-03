@@ -1,0 +1,14 @@
+.fixed-top {
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+#header{
+    background-color: rgb(10, 174, 177);
+}
+
+#Tmdb{
+    font-size: 30px;
+    font-weight: 300;
+    margin-left: 10px;
+
+}

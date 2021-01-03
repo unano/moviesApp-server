@@ -1,0 +1,1 @@
+export const viking="#37B6C6"

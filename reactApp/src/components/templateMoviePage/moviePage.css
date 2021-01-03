@@ -1,0 +1,15 @@
+img.movie {
+    float: left;
+    width: 100%;
+    height: 28rem;
+    margin-left:0px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    border-radius:4px;
+  }
+#row2{
+  border-width:2px;
+  border-radius:4px;
+  margin:10px;
+  box-shadow:0 0 0 2px darkturquoise,1px 1px 1px grey;
+}

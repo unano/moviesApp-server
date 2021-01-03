@@ -1,0 +1,34 @@
+
+.center {
+    z-index: 1;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0px;
+    width: 98%;
+    border-radius:3px;
+  }
+#movpic{
+  height:90%
+}
+.personMovie{
+  border-width:2px;
+  border-radius:4px;
+}
+.personMovieCard{
+  width:90px;
+  height:150px;
+  margin: 7px;
+}
+
+#title{
+  height:36px;
+  overflow:hidden;
+  text-overflow : ellipsis;
+}
+
+
+
+.card{
+  color:black
+}
