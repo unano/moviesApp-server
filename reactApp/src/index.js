@@ -1,6 +1,11 @@
-import React , { lazy ,Suspense}from "react";
+import React, { lazy ,Suspense} from "react";
 import ReactDOM from "react-dom";
-import { BrowserRouter, Route, Redirect, Switch} from "react-router-dom"    // CHANGED
+import { BrowserRouter, Route, Redirect, Switch, Link } from "react-router-dom";
+// import { PublicPage, Movies, Profile, HomePage } from "./pages/pages";
+// import LoginPage from "./pages/loginPage";
+import PrivateRoute from "./pages/privateRoute";
+import AuthProvider from "./contexts/authContext";
+
 // import FavoriteMoviesPage from './pages/favoritesMoviesPage';       // NEW
 import "../node_modules/bootstrap/dist/css/bootstrap.css";
 import HomePage from "./pages/homePage";
@@ -14,10 +19,9 @@ import SiteHeader from './components/siteHeader'
 import MoviesContextProvider from "./contexts/moviesContext";
 import GenresContextProvider from "./contexts/genresContext";
 import PersonalContextProvider from "./contexts/personalContext";
-// import AddMovieReviewPage from './pages/addMovieReviewPage';
+// import AddMovieReviewPage from '../pages/addMovieReviewPage';
 // import LoginPage from './pages/loginPage';
-// import RegistPage from './pages/registPage';
-import LoginContextProvider from './contexts/loginContext' 
+// import RegistPage from './pages/registPage'; 
 // import PeopleDetailsPage from './pages/peopleDetailsPage'
 // import PopularPeoplePage from './pages/popularPeoplePage';
 // import PersonalInfoPage from './pages/personalInfoPage';
@@ -41,12 +45,13 @@ const PersonalInfoPage  = lazy(() => import('./pages/personalInfoPage'));
 const PeopleDetailsPage = lazy(() => import('./pages/peopleDetailsPage'));
 const PopularPeoplePage = lazy(() => import('./pages/popularPeoplePage'));
 
+
 const App = () => {
   return (
     <ThemeProvider theme={theme}>
     <BrowserRouter>
-    <div className="jumbotron bg-white">
-    <LoginContextProvider>
+      <AuthProvider>
+      <div className="jumbotron bg-white">
       <SiteHeader /> 
       <div className="container-fluid">
       <MoviesContextProvider>     {/* NEW  */}
@@ -54,7 +59,7 @@ const App = () => {
       <PersonalContextProvider>
       <Suspense fallback={<div>Loading...</div>}>
         <Switch>
-          <Route exact path="/person" component={PopularPeoplePage} />
+        <Route exact path="/person" component={PopularPeoplePage} />
           <Route path="/person/:id" component={PeopleDetailsPage} />
           <Route exact path="/info" component={PersonalInfoPage} />
           <Route exact path="/editInfo" component={PersonalInfoEditPage} />
@@ -69,6 +74,11 @@ const App = () => {
           <Route exact path="/movies/regist" component={RegistPage} />
           <Route path="/movies/:id" component={MoviePage} />
           <Route path="/" component={HomePage} />
+
+          {/* <Route path="/public" component={PublicPage} />
+          <Route path="/login" component={LoginPage} />
+          <Route path="/signup" component={SignUpPage} />
+          <PrivateRoute path="/profile" component={Profile} /> */}
           <Redirect from="*" to="/" />
         </Switch>
         </Suspense>
@@ -76,10 +86,10 @@ const App = () => {
         </GenresContextProvider>    {/* NEW */}
         </MoviesContextProvider>     {/* NEW */}
       </div>
-      </LoginContextProvider>
     </div>
-  </BrowserRouter>
-  </ThemeProvider>
+      </AuthProvider>
+    </BrowserRouter>
+    </ThemeProvider>
   );
 };
 

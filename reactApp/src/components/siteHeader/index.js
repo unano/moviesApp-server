@@ -3,32 +3,30 @@ import { Link } from "react-router-dom";
 import "../../globals/fontawesome";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./siteHeader.css";
-import {LoginContext} from '../../contexts/loginContext'
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import { withRouter } from "react-router-dom";
-// import { AuthContext } from "../../contexts/authContext";
+import { AuthContext } from "../../contexts/authContext";
 
 const SiteHeader = (props) => {
-  const Logcontext = useContext(LoginContext);
-  if(Logcontext.login===1){
-  }
+  const context = useContext(AuthContext);
+
   const loginBut = {
-    display:Logcontext.login===1?"none" : "block"
+    display:context.isAuthenticated?"none" : "block"
   };
 
   const logoutBut = {
 
-    display:Logcontext.login===0?"none" : "block"
+    display:context.isAuthenticated?"block" : "none"
   };
 
   const ValidateLogout=()=>{
-    Logcontext.changeStateToUnLogged();
+    context.signout();
 }
 const [anchorEl, setAnchorEl] = React.useState(null);
 
   const handleClick = (event) => {
-    if(Logcontext.login===1)
+    if(context.isAuthenticated)
     setAnchorEl(event.currentTarget);
     else
     alert("please login first");
@@ -38,8 +36,17 @@ const [anchorEl, setAnchorEl] = React.useState(null);
     setAnchorEl(null);
   };
 
-  // const context = useContext(AuthContext);
   const { history } = props;
+  // context.isAuthenticated ? (
+  //   <p>
+  //   Welcome {context.userName}! <button onClick={() => context.signout()}>Sign out</button>
+  // </p>
+  // ) : (
+  //   <p>
+  //     You are not logged in{" "}
+  //     <button onClick={() => history.push("/login")}>Login</button>
+  //   </p>
+  // );
 
   return (
     <nav className="navbar  navbar-light fixed-top" id="header">
@@ -121,16 +128,6 @@ const [anchorEl, setAnchorEl] = React.useState(null);
           </div>
           </li>
         </ul>
-        {/* context.isAuthenticated ? (
-    <p>
-    Welcome {context.userName}! <button onClick={() => context.signout()}>Sign out</button>
-  </p>
-  ) : (
-    <p>
-      You are not logged in{" "}
-      <button onClick={() => history.push("/login")}>Login</button>
-    </p>
-  ); */}
       </nav>
     </nav>
   );

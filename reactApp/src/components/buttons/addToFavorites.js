@@ -1,13 +1,13 @@
 import React, { useContext } from "react";
 import {MoviesContext} from "../../contexts/moviesContext";
-import {LoginContext} from '../../contexts/loginContext'
+import {AuthContext} from '../../contexts/authContext'
 
 const AddToFavoriteButton = ({ movie }) => {
   const context = useContext(MoviesContext);
-  const Logcontext = useContext(LoginContext);
+  const Logcontext = useContext(AuthContext);
   const handleAddToFavorite = e => {
     e.preventDefault();
-    if(Logcontext.login===0){
+    if(!Logcontext.isAuthenticated){
       alert("please login first")
     }
     else{
