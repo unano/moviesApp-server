@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
 const Warp = styled.div`
-    width:300px;
-    height:300px;
+    width:320px;
+    height:320px;
     margin: 0 auto;
     margin-top:40px;
     text-align: center;

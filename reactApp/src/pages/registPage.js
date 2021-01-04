@@ -17,13 +17,32 @@ const Regist = props => {
   const [password, setPassword] = useState("");
   const [passwordAgain, setPasswordAgain] = useState("");
   const [registered, setRegistered] = useState(false);
+  const [warning,setWarning]=useState({content:"" , state: false});
 
   const register = () => {
-    if (password.length > 0 && password === passwordAgain) {
+    var reg=/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{5,}$/;
+    var result=reg.test(password);
+    if (result && password.length > 0 && password === passwordAgain) {
       context.register(userName, password);
       setRegistered(true);
     }
+    else if(password.length===0){
+      setWarning({content:"Please enter password" , state: true});
+    }
+    else if(passwordAgain.length===0){
+      setWarning({content:"Please enter password again" , state: true});
+    }
+    else if (!result){
+      setWarning({content:"Password too short/no letter & symbol" , state: true});
+    }
+    else if(password !== passwordAgain){
+      setWarning({content:"Entered passwords differ" , state: true});
+    }
   }
+
+  const warn = {
+    display: warning.state? "block": "none"
+  };
 
   const { from } = props.location.state || { from: { pathname: "/" } };
 
@@ -34,8 +53,7 @@ const Regist = props => {
         <Warp>
         <div id="window">
         <LoginTitle>Regist</LoginTitle>
-        {/* <Warn className="warn" style={warn}>{warning.content}</Warn> */}
-        {/* <form onSubmit={handleSubmit(onSubmit)}> */}
+        <Warn className="warn" style={warn}>{warning.content}</Warn>
         <dl>
             <Li className="nav-item" id="usernameButton">
                 <span>Username:</span> 
