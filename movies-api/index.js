@@ -4,6 +4,7 @@ import bodyParser from 'body-parser';
 import moviesRouter from './api/movies';
 import './db';
 import usersRouter from './api/users';
+import peopleRouter from './api/people';
 import genresRouter from './api/genres';
 import session from 'express-session';
 import passport from './authenticate';
@@ -50,6 +51,7 @@ app.use(session({
 
 app.use('/api/movies', passport.authenticate('jwt', {session: false}), moviesRouter);
 app.use('/api/users', usersRouter);
+app.use('/api/people', peopleRouter);
 app.use('/api/genres', genresRouter);
 app.use(errHandler);
 

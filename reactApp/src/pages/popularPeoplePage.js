@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { getPopularPeople} from "../api/tmdb-api";
+import { getPopularPeople} from "../api/movie-api";
 import PersonList from "../components/personList"
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';

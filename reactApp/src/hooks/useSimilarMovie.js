@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import {getSimilarMovies} from '../api/tmdb-api';
+import {getSimilarMovies} from "../api/movie-api";
 
 const useSimilarMovie = id => {
   const [similarMovies, setSimilarMovies] = useState([]);
