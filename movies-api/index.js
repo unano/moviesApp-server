@@ -10,8 +10,15 @@ import session from 'express-session';
 import passport from './authenticate';
 import {loadUsers, loadMovies} from './seedData';
 import loglevel from 'loglevel';
+import helmet from 'helmet';
+import morgan from 'morgan';
+import path from 'path';
+import fs from  'fs';
 
 dotenv.config();
+
+// create a write stream (in append mode) for logging
+var accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' });
 
 const errHandler = (err, req, res, next) => {
   /* if the error in development then send stack trace to display whole error,
@@ -33,7 +40,23 @@ if (process.env.SEED_DB === 'true' && process.env.NODE_ENV === 'development') {
   loadMovies();
 }
 
+// // General error handler
+// const errHandler = (err, req, res, next) => {
+//   err.statusCode = err.statusCode || 500;
+//   err.status = err.status || 'error';
+
+//   res.status(err.statusCode).json({
+//     status: err.status,
+//     message: err.message
+//   });
+// };
+
 const app = express();
+
+//Set up default helmet security
+app.use(helmet());
+// setup the logger
+app.use(morgan('combined', { stream: accessLogStream }));
 
 const port = process.env.PORT;
 
