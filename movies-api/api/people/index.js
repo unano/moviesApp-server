@@ -1,5 +1,5 @@
 import express from 'express';
-
+import peopleModel from './peopleModel';
 import {
     getPopularPeople, getPeople, getPeopleMovieCredit
 } from '../tmdb-api';
@@ -7,11 +7,13 @@ import {
 const router = express.Router();
 
 router.get('/', (req, res, next) => {
-    getPopularPeople().then(people => res.status(200).send(people)).catch(next);
+    peopleModel.find().then(people => res.status(200).send(people)).catch(next);
+    // getPopularPeople().then(people => res.status(200).send(people)).catch(next);
 });
 
 router.get('/:id', (req, res, next) => {
     const id = parseInt(req.params.id);
+    // peopleModel.findByPeopleDBId(id).then(people => res.status(200).send(people)).catch(next);
     getPeople(id).then(people => res.status(200).send(people)).catch(next);
 });
 

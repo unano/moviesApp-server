@@ -8,7 +8,7 @@ import peopleRouter from './api/people';
 import genresRouter from './api/genres';
 import session from 'express-session';
 import passport from './authenticate';
-import {loadUsers, loadMovies} from './seedData';
+import {loadUsers, loadMovies, loadPeople} from './seedData';
 import loglevel from 'loglevel';
 import helmet from 'helmet';
 import morgan from 'morgan';
@@ -38,6 +38,7 @@ if (process.env.NODE_ENV === 'test') {
 if (process.env.SEED_DB === 'true' && process.env.NODE_ENV === 'development') {
   loadUsers();
   loadMovies();
+  loadPeople();
 }
 
 // // General error handler
