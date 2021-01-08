@@ -8,12 +8,25 @@ const users = [
   {
     'username': 'user1',
     'password': 'test1',
+    'userInfo':{"gender":"male",
+    "birthday":"2000-01-01",
+    "hobby":"sport",
+    "movies":"movie1",
+    "actors":"actor1",
+    "introduce":"I'm who"}
   },
   {
     'username': 'user2',
     'password': 'test2',
+    'userInfo':{"gender":"male",
+    "birthday":"2000-01-01",
+    "hobby":"sport",
+    "movies":"movie2",
+    "actors":"actor2",
+    "introduce":"I'm good"}
   },
 ];
+
 
 // deletes all user documents in collection and inserts test data
 export async function loadUsers() {
@@ -26,7 +39,7 @@ export async function loadUsers() {
       console.error(`failed to Load user Data: ${err}`);
     }
   }
-  
+
 export async function loadMovies() {
   console.log('load seed data');
   console.log(movies.length);

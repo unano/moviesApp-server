@@ -87,4 +87,20 @@ router.get('/:userName/favourites', (req, res, next) => {
   ).catch(next);
 });
 
+router.get('/:userName/userInfo', (req, res, next) => {
+  const userName = req.params.userName;
+  User.findByUserName(userName).then(
+    user => res.status(201).json(user.userInfo)
+  ).catch(next);
+});
+
+router.put('/:userName/userInfo', async (req, res, next) => { 
+  if (req.body._id) delete req.body._id;
+  User.findOneAndUpdate({username: req.params.userName},{userInfo:req.body})
+  .then(function(){
+    User.findByUserName(req.params.userName)
+    .then(user => res.json(200, user)).catch(next);
+  });
+});
+
 export default router;
