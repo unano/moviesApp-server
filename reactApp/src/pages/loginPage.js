@@ -22,7 +22,6 @@ const Login = props => {
       // Set 'from' to path where browser is redirected after a successful login.
       // Either / or the protected path user tried to access.
       const { from } = { from: { pathname: "/" } };
-      console.log(context)
       if (context.isAuthenticated === true) {
         return <Redirect to={from} />;
       }

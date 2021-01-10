@@ -7,9 +7,10 @@ const PersonalInfoPage = () => {
     const context = useContext(AuthContext)
     const userContext = useContext(PersonalContext);
     const user=userContext.user;
-    user.username=context.userName;
+    userContext.setUserName(context.userName);
+    // user.username=context.userName;
   return (
-    <PersonalInfo user={user}/>
+    <PersonalInfo user={user} userName={context.userName}/>
   );
 };
 

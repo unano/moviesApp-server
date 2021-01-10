@@ -1,4 +1,5 @@
-import React, {createContext, useState} from "react";
+import React, {createContext, useState, useEffect} from "react";
+import { getInfo, editInfo } from "../api/movie-api";
 
 export const PersonalContext = createContext(null);
   
@@ -12,13 +13,28 @@ const PersonalContextProvider=(props)=>{
         actors:"No record",
         introduce:"No record",
     }
-    const[user,setUser] = useState(userInfo);
+    const[user,setUser] = useState("");
+    const [userName, setUserName] = useState("");
+
+    const edit = async (info) => {
+        const result = await editInfo(userName,info);
+        console.log(result.code);
+        return (result.code == 201) ? true : false;
+      };
+
+    useEffect(() => {
+        getInfo(userName).then(user => {
+          setUser(user);
+        });
+      },[userName]);
 
     return (
         <PersonalContext.Provider
           value={{
             user:user,
-            setUser:setUser
+            setUser:setUser,
+            setUserName:setUserName,
+            edit:edit
         }}
         >
             {props.children}

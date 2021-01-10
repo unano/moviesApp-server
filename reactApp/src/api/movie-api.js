@@ -18,6 +18,25 @@ export const signup = (username, password) => {
     }).then(res => res.json())
 };
 
+export const editInfo = (userName, info) => {
+  return fetch(`/api/users/${userName}/userInfo`, {
+      headers: {
+          'Content-Type': 'application/json'
+      },
+      method: 'put',
+      body: JSON.stringify(info)
+  }).then(res => res.json())
+};
+
+export const getInfo = (userName) => {
+  return fetch(
+    `/api/users/${userName}/userInfo`,{headers: {
+     'Content-Type': 'application/json'
+   }
+ }
+ ).then(res => res.json());
+};
+
 export const getMovies = () => {
     return fetch(
        '/api/movies',{headers: {

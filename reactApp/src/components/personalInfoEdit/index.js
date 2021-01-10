@@ -15,7 +15,6 @@ const PersonalInfoEdit = ({history, userInfo}) => {
     const {handleSubmit} = useForm();
     const context = useContext(PersonalContext);
     const [user,setUser]=useState(userInfo);
-    console.log(user)
 
     const useStyles = makeStyles((theme) => ({
         container: {
@@ -35,6 +34,7 @@ const PersonalInfoEdit = ({history, userInfo}) => {
     }
     
     function onSubmit(formData){
+        context.edit(user);
         context.setUser(user);
         console.log(formData);
         history.push("/info");
