@@ -20,6 +20,10 @@ const TopRatedMovieSchema = new Schema({
   vote_count: { type: Number },
 });
 
+TopRatedMovieSchema.statics.findByMovieDBId = function (id) {
+  return this.findOne({ id: id });
+};
+
 export default mongoose.model('TopRatedMovies', TopRatedMovieSchema);
 
 

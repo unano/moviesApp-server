@@ -19,6 +19,8 @@ const UserSchema = new Schema({
     // message: "password length should be between 5 and 15."
   },
   favourites: [{type: mongoose.Schema.Types.ObjectId, ref: 'Movies'}],
+  collections: [{type: mongoose.Schema.Types.ObjectId, ref: 'TopRatedMovies'}],
+  watchList: [{type: mongoose.Schema.Types.ObjectId, ref: 'UpcomingMovies'}],
   userInfo:UserInfoSchema
 });
 

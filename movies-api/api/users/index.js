@@ -2,6 +2,8 @@ import express from 'express';
 import User from './userModel';
 import jwt from 'jsonwebtoken';
 import movieModel from '../movies/movieModel';
+import topRatedMovieModel from '../movies/topRatedMovieModel';
+import upcomingMovieModel from '../movies/upcomingMovieModel';
 
 const router = express.Router(); // eslint-disable-line
 
@@ -86,6 +88,47 @@ router.get('/:userName/favourites', (req, res, next) => {
     user => res.status(201).json(user.favourites)
   ).catch(next);
 });
+
+router.post('/:userName/collections', async (req, res, next) => {
+  const collections = req.body.id;
+  const userName = req.params.userName;
+  const movie = await topRatedMovieModel.findByMovieDBId(collections).catch(next);
+  if (!movie) return res.status(401).json({ code: 401, msg: 'Movie not found.' });
+  const user = await User.findByUserName(userName);
+  await user.collections.push(movie._id);
+  var dedupe = require('dedupe');
+  user.collections = dedupe(user.collections);
+  await user.save(); 
+  res.status(201).json(user); 
+});
+
+router.get('/:userName/collections', (req, res, next) => {
+  const userName = req.params.userName;
+  User.findByUserName(userName).populate('collections').then(
+    user => res.status(201).json(user.favourites)
+  ).catch(next);
+});
+
+router.post('/:userName/watchList', async (req, res, next) => {
+  const watchList = req.body.id;
+  const userName = req.params.userName;
+  const movie = await upcomingMovieModel.findByMovieDBId(watchList).catch(next);
+  if (!movie) return res.status(401).json({ code: 401, msg: 'Movie not found.' });
+  const user = await User.findByUserName(userName);
+  await user.watchList.push(movie._id);
+  var dedupe = require('dedupe');
+  user.watchList = dedupe(user.watchList);
+  await user.save(); 
+  res.status(201).json(user); 
+});
+
+router.get('/:userName/watchList', (req, res, next) => {
+  const userName = req.params.userName;
+  User.findByUserName(userName).populate('watchList').then(
+    user => res.status(201).json(user.favourites)
+  ).catch(next);
+});
+
 
 router.get('/:userName/userInfo', (req, res, next) => {
   const userName = req.params.userName;

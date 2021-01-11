@@ -20,6 +20,9 @@ const UpcomingMovieSchema = new Schema({
   vote_count: { type: Number },
 });
 
+UpcomingMovieSchema.statics.findByMovieDBId = function (id) {
+  return this.findOne({ id: id });
+};
 export default mongoose.model('UpcomingMovies', UpcomingMovieSchema);
 
 
