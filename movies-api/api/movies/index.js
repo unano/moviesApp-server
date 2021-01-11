@@ -1,5 +1,7 @@
 import express from 'express';
 import movieModel from './movieModel';
+import topRatedmovieModel from './topRatedMovieModel';
+import upcomingmovieModel from './upcomingMovieModel';
 import {
   getMovies, getMovie, getMovieReviews, getUpcomingMovies, getTopRatedMovies,getSimilarMovies
 } from '../tmdb-api';
@@ -11,11 +13,11 @@ router.get('/', (req, res, next) => {
 });
 
 router.get('/upcoming', (req, res, next) => {
-  getUpcomingMovies().then(upcoming => res.status(200).send(upcoming)).catch(next);
+  upcomingmovieModel.find().then(upcoming => res.status(200).send(upcoming)).catch(next);
 });
 
 router.get('/topRated', (req, res, next) => {
-  getTopRatedMovies().then(upcoming => res.status(200).send(upcoming)).catch(next);
+  topRatedmovieModel.find().then(topRated => res.status(200).send(topRated)).catch(next);
 });
 
 router.get('/:id', (req, res, next) => {

@@ -8,7 +8,7 @@ import peopleRouter from './api/people';
 import genresRouter from './api/genres';
 import session from 'express-session';
 import passport from './authenticate';
-import {loadUsers, loadMovies, loadPeople} from './seedData';
+import {loadUsers, loadMovies, loadPeople, loadUpcomingMovies, loadTopRatedMovies} from './seedData';
 import loglevel from 'loglevel';
 import helmet from 'helmet';
 import morgan from 'morgan';
@@ -39,6 +39,8 @@ if (process.env.SEED_DB === 'true' && process.env.NODE_ENV === 'development') {
   loadUsers();
   loadMovies();
   loadPeople();
+  loadUpcomingMovies();
+  loadTopRatedMovies();
 }
 
 // // General error handler
@@ -73,7 +75,7 @@ app.use(session({
   saveUninitialized: true
 }));
 
-app.use('/api/movies', passport.authenticate('jwt', {session: false}), moviesRouter);
+app.use('/api/movies', moviesRouter); //passport.authenticate('jwt', {session: false}),
 app.use('/api/users', usersRouter);
 app.use('/api/people', peopleRouter);
 app.use('/api/genres', genresRouter);
