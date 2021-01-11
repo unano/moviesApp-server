@@ -1,15 +1,22 @@
-import React, {useContext} from "react";
+import React, {useContext, useState, useEffect} from "react";
 import MovieListPageTemplate from "../components/templateMovieListPage";
 import AddReviewButton from '../components/buttons/addReview'
-import {MoviesContext} from '../contexts/moviesContext'
+import {getCollections} from "../api/movie-api";
+import {AuthContext} from '../contexts/authContext';
 
 const CollectionPage = props => {
-  const context = useContext(MoviesContext);
-  const collection = context.topRated.filter( m => m.collections )
+  const authContext = useContext(AuthContext);
+  const [collections,setCollections]=useState([]);
+  useEffect(() => {
+    getCollections(authContext.userName).then(user => {
+      setCollections(user);
+    });
+  },[authContext.userName]);
+  console.log(collections)
 
   return (
     <MovieListPageTemplate
-      movies={collection}
+      movies={collections}
       title={"Collection List"}
       action={movie => <AddReviewButton movie={movie} />}
     />

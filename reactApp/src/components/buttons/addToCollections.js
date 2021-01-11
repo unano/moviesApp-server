@@ -12,7 +12,7 @@ const AddToCollectionsButton  = ({ movie }) => {
             alert("please login first")
           }
           else{
-            context.addToCollections(movie.id);
+            context.addToCollections(Logcontext.userName,movie.id);
           }
         };
       

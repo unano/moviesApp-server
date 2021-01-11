@@ -105,7 +105,7 @@ router.post('/:userName/collections', async (req, res, next) => {
 router.get('/:userName/collections', (req, res, next) => {
   const userName = req.params.userName;
   User.findByUserName(userName).populate('collections').then(
-    user => res.status(201).json(user.favourites)
+    user => res.status(201).json(user.collections)
   ).catch(next);
 });
 
@@ -125,7 +125,7 @@ router.post('/:userName/watchList', async (req, res, next) => {
 router.get('/:userName/watchList', (req, res, next) => {
   const userName = req.params.userName;
   User.findByUserName(userName).populate('watchList').then(
-    user => res.status(201).json(user.favourites)
+    user => res.status(201).json(user.watchList)
   ).catch(next);
 });
 

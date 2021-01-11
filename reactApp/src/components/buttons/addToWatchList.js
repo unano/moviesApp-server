@@ -12,7 +12,8 @@ const AddToWatchListButton  = ({ movie }) => {
           }
           else{
           e.preventDefault();
-          context.addToWatchList(movie.id);
+          context.addToWatchList(Logcontext.userName,movie.id);
+          
           }
         };
       

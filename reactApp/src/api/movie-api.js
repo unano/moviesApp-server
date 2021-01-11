@@ -37,6 +37,44 @@ export const getFavourite = (userName) => {
  ).then(res => res.json());
 };
 
+export const addWatchList = (userName, id) => {
+  return fetch(`/api/users/${userName}/watchList`, {
+      headers: {
+          'Content-Type': 'application/json'
+      },
+      method: 'post',
+      body: JSON.stringify({ id: id })
+  }).then(res => res.json())
+};
+
+export const getWatchList = (userName) => {
+  return fetch(
+    `/api/users/${userName}/watchList`,{headers: {
+     'Content-Type': 'application/json'
+   }
+ }
+ ).then(res => res.json());
+};
+
+export const addCollections = (userName, id) => {
+  return fetch(`/api/users/${userName}/collections`, {
+      headers: {
+          'Content-Type': 'application/json'
+      },
+      method: 'post',
+      body: JSON.stringify({ id: id })
+  }).then(res => res.json())
+};
+
+export const getCollections = (userName) => {
+  return fetch(
+    `/api/users/${userName}/collections`,{headers: {
+     'Content-Type': 'application/json'
+   }
+ }
+ ).then(res => res.json());
+};
+
 export const editInfo = (userName, info) => {
   return fetch(`/api/users/${userName}/userInfo`, {
       headers: {
