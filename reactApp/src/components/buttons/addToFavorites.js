@@ -11,7 +11,7 @@ const AddToFavoriteButton = ({ movie }) => {
       alert("please login first")
     }
     else{
-      context.addToFavorites(movie.id);
+      context.addToFavorites(Logcontext.userName,movie.id);
     }
   };
   return (

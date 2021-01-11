@@ -13,9 +13,11 @@ const UserInfoSchema = new Schema({
 
 const UserSchema = new Schema({
   username: { type: String, unique: true, required: true},
-  password: {type: String, required: true, validate: function(password){
-    return password.length>=5 && password.length<=15;}, 
-    message: "password length should be between 5 and 15."},
+  password: {type: String, required: true
+    //, validate: function(password){
+    //return password.length>=5 && password.length<=15;}, 
+    // message: "password length should be between 5 and 15."
+  },
   favourites: [{type: mongoose.Schema.Types.ObjectId, ref: 'Movies'}],
   userInfo:UserInfoSchema
 });

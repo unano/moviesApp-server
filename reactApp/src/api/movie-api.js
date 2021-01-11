@@ -18,6 +18,25 @@ export const signup = (username, password) => {
     }).then(res => res.json())
 };
 
+export const addFavorites = (userName, id) => {
+  return fetch(`/api/users/${userName}/favourites`, {
+      headers: {
+          'Content-Type': 'application/json'
+      },
+      method: 'post',
+      body: JSON.stringify({ id: id })
+  }).then(res => res.json())
+};
+
+export const getFavourite = (userName) => {
+  return fetch(
+    `/api/users/${userName}/favourites`,{headers: {
+     'Content-Type': 'application/json'
+   }
+ }
+ ).then(res => res.json());
+};
+
 export const editInfo = (userName, info) => {
   return fetch(`/api/users/${userName}/userInfo`, {
       headers: {
