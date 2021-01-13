@@ -2,7 +2,11 @@ import chai from "chai";
 import request from "supertest";
 import userModel from "../../../../api/users/userModel";
 import movieModel from "../../../../api/movies/movieModel";
+import topRatedmovieModel from '../../../../api/movies/topRatedMovieModel';
+import upcomingmovieModel from '../../../../api/movies/upcomingMovieModel';
 import {movies} from '../../../../seedData/movies.js';
+import {topRated} from '../../../../seedData/topRated.js';
+import {upcoming} from '../../../../seedData/upcoming.js';
 
 const expect = chai.expect;
 
@@ -41,6 +45,20 @@ describe("Movies endpoint", () => {
     } catch (err) {
     console.error(`failed to Load movie Data: ${err}`);
     }
+    try {
+      await topRatedmovieModel.deleteMany();
+      await topRatedmovieModel.collection.insertMany(topRated);
+      console.info(`${topRated.length} TopRated Movies were successfully stored.`);
+      } catch (err) {
+      console.error(`failed to Load movie Data: ${err}`);
+      }
+    try {
+      await upcomingmovieModel.deleteMany();
+      await upcomingmovieModel.collection.insertMany(upcoming);
+      console.info(`${upcoming.length} Upcoming Movies were successfully stored.`);
+      } catch (err) {
+      console.error(`failed to Load movie Data: ${err}`);
+      }
     return request(api)
         .post("/api/users")
         .send({
@@ -91,9 +109,70 @@ describe("Movies endpoint", () => {
           .get("/api/movies/xxx")
           .set("Authorization", token)
           .set("Accept", "application/json")
-          .expect("Content-Type", /text/)
-          .expect({});
+          .expect("Content-Type", /json/)
+          .expect({
+            "status_code": 34,
+            "status_message": "The resource you requested could not be found.",
+            "success": false
+            });
       });
+    });
+  });
+
+  describe("GET /movies/upcoming", () => {
+  it("should return 20 upcoming movies and a status 200", () => {
+    return request(api)
+      .get("/api/movies/upcoming")
+      .set("Authorization", token)
+      .set("Accept", "application/json")
+      .expect("Content-Type", /json/)
+      .expect(200)
+      .then((res) => {
+        expect(res.body).to.be.a("array");
+        expect(res.body.length).to.equal(20);
+      });
+  });
+});
+
+  describe("GET /movies/topRated", () => {
+    it("should return 20 topRated movies and a status 200", () => {
+      return request(api)
+        .get("/api/movies/topRated")
+        .set("Authorization", token)
+        .set("Accept", "application/json")
+        .expect("Content-Type", /json/)
+        .expect(200)
+        .then((res) => {
+          expect(res.body).to.be.a("array");
+          expect(res.body.length).to.equal(20);
+        });
+    });
+  });
+  describe("GET /movies/:id/reviews ", () => {
+    it("should return movie reviews and a status 200", () => {
+      return request(api)
+        .get(`/api/movies/${sampleMovie.id}/reviews`)
+        .set("Authorization", token)
+        .set("Accept", "application/json")
+        .expect("Content-Type", /json/)
+        .expect(200)
+        .then((res) => {
+          expect(res.body).to.be.a("array");
+        });
+    });
+  });
+
+  describe("GET /movies/:id/similar ", () => {
+    it("should return similar movies and a status 200", () => {
+      return request(api)
+        .get(`/api/movies/${sampleMovie.id}/similar`)
+        .set("Authorization", token)
+        .set("Accept", "application/json")
+        .expect("Content-Type", /json/)
+        .expect(200)
+        .then((res) => {
+          expect(res.body).to.be.a("object");
+        });
     });
   });
 });
