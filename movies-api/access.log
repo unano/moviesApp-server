@@ -2831,3 +2831,7 @@
 ::1 - - [13/Jan/2021:13:41:58 +0000] "POST /api/users?action=register HTTP/1.1" 201 524 "-" "PostmanRuntime/7.26.10"
 ::1 - - [13/Jan/2021:13:44:51 +0000] "POST /api/users?action=register HTTP/1.1" 201 49 "-" "PostmanRuntime/7.26.10"
 ::1 - - [13/Jan/2021:13:44:57 +0000] "POST /api/users?action=register HTTP/1.1" 201 549 "-" "PostmanRuntime/7.26.10"
+::1 - - [13/Jan/2021:14:00:00 +0000] "POST /api/users/user1/userInfo HTTP/1.1" 404 164 "-" "PostmanRuntime/7.26.10"
+::1 - - [13/Jan/2021:14:00:13 +0000] "PUT /api/users/user1/userInfo HTTP/1.1" 401 48 "-" "PostmanRuntime/7.26.10"
+::1 - - [13/Jan/2021:14:01:15 +0000] "PUT /api/users/user1/userInfo HTTP/1.1" 200 343 "-" "PostmanRuntime/7.26.10"
+::1 - - [13/Jan/2021:14:01:21 +0000] "PUT /api/users/user1/userInfo HTTP/1.1" 200 349 "-" "PostmanRuntime/7.26.10"

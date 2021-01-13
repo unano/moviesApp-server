@@ -138,12 +138,18 @@ router.get('/:userName/userInfo', (req, res, next) => {
 });
 
 router.put('/:userName/userInfo', async (req, res, next) => { 
-  if (req.body._id) delete req.body._id;
-  User.findOneAndUpdate({username: req.params.userName},{userInfo:req.body})
-  .then(function(){
-    User.findByUserName(req.params.userName)
-    .then(user => res.json(200, user)).catch(next);
-  });
+  if(req.body.gender && req.body.birthday && req.body.hobby && req.body.movies && req.body.actors && req.body.introduce){
+    User.findOneAndUpdate({username: req.params.userName},{userInfo:req.body})
+    .then(function(){
+      User.findByUserName(req.params.userName)
+      .then(user => res.json(200, user)).catch(next);
+    });
+  }else {
+    res.status(401).json({
+      code: 401,
+      msg: 'lack full user information.'
+    });
+  }
 });
 
 export default router;
