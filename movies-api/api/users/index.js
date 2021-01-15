@@ -15,29 +15,43 @@ router.get('/', (req, res, next) => {
 // register
 router.post('/', async (req, res, next) => {
   if (!req.body.username || !req.body.password) {
-    res.status(401).json({
-      success: false,
-      msg: 'Please pass username and password.',
-    });
+    const err = new Error('Please pass username and password.',);
+      err.status = 'fail';
+      err.statusCode = 400;
+      next(err);
   }
   if (req.query.action === 'register') {
     var reg=/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{5,}$/;
-    var result=reg.test(req.body.password);
-    if(result){
-      await User.create(req.body).catch(next);
-      res.status(201).json({
-      code: 201,
-      msg: 'Successful created new user.',
-    });}
-    else{
-      res.status(401).json({
-        success: false,
-        msg: 'Password is at least 5 characters long and contain at least one number and one letter.',
-      });
-    }
-  } else {
     const user = await User.findByUserName(req.body.username).catch(next);
-      if (!user) return res.status(401).json({ code: 401, msg: 'Authentication failed. User not found.' });
+      if (user) {
+        const err = new Error('Username is used.');
+        err.status = 'fail';
+        err.statusCode = 400;
+        next(err);
+      }
+      else{
+        var result=reg.test(req.body.password);
+        if(result){
+          await User.create(req.body).catch(next);
+          res.status(201).json({
+            code: 201,
+            msg: 'Successful created new user.',
+          });}
+        else{
+          const err = new Error('Password is at least 5 characters long and contain at least one number and one letter.');
+          err.status = 'fail';
+          err.statusCode = 400;
+          next(err);
+        }
+      }
+    } else {
+      const user = await User.findByUserName(req.body.username).catch(next);
+      if (!user) {
+        const err = new Error('Authentication failed. User not found.');
+        err.status = 'fail';
+        err.statusCode = 400;
+        next(err);
+      }
       user.comparePassword(req.body.password, (err, isMatch) => {
         if (isMatch && !err) {
           // if user is found and password is right create a token
@@ -48,10 +62,10 @@ router.post('/', async (req, res, next) => {
             token: 'BEARER ' + token,
           });
         } else {
-          res.status(401).json({
-            code: 401,
-            msg: 'Authentication failed. Wrong password.'
-          });
+          const err = new Error('Authentication failed. Wrong password.');
+          err.status = 'fail';
+          err.statusCode = 400;
+          next(err);
         }
       });
     }
@@ -71,9 +85,20 @@ router.put('/:id',  (req, res, next) => {
 //Add a favourite. No Error Handling Yet. Can add duplicates too!
 router.post('/:userName/favourites', async (req, res, next) => {
   const newFavourite = req.body.id;
+  if(!newFavourite){
+    const err = new Error(`Please enter movie id.`);
+    err.status = 'fail';
+    err.statusCode = 400;
+    next(err);
+  }
   const userName = req.params.userName;
   const movie = await movieModel.findByMovieDBId(newFavourite).catch(next);
-  if (!movie) return res.status(401).json({ code: 401, msg: 'Movie not found.' });
+  if(!movie){
+    const err = new Error(`Movie not found.`);
+    err.status = 'fail';
+    err.statusCode = 400;
+    next(err);
+  }
   const user = await User.findByUserName(userName);
   await user.favourites.push(movie._id);
   var dedupe = require('dedupe');
@@ -91,9 +116,20 @@ router.get('/:userName/favourites', (req, res, next) => {
 
 router.post('/:userName/collections', async (req, res, next) => {
   const collections = req.body.id;
+  if(!collections){
+    const err = new Error(`Please enter movie id.`);
+    err.status = 'fail';
+    err.statusCode = 400;
+    next(err);
+  }
   const userName = req.params.userName;
   const movie = await topRatedMovieModel.findByMovieDBId(collections).catch(next);
-  if (!movie) return res.status(401).json({ code: 401, msg: 'Movie not found.' });
+  if(!movie){
+    const err = new Error(`Movie not found.`);
+    err.status = 'fail';
+    err.statusCode = 400;
+    next(err);
+  }
   const user = await User.findByUserName(userName);
   await user.collections.push(movie._id);
   var dedupe = require('dedupe');
@@ -111,9 +147,20 @@ router.get('/:userName/collections', (req, res, next) => {
 
 router.post('/:userName/watchList', async (req, res, next) => {
   const watchList = req.body.id;
+  if(!watchList){
+    const err = new Error(`Please enter movie id.`);
+    err.status = 'fail';
+    err.statusCode = 400;
+    next(err);
+  }
   const userName = req.params.userName;
   const movie = await upcomingMovieModel.findByMovieDBId(watchList).catch(next);
-  if (!movie) return res.status(401).json({ code: 401, msg: 'Movie not found.' });
+  if(!movie){
+    const err = new Error(`Movie not found.`);
+    err.status = 'fail';
+    err.statusCode = 400;
+    next(err);
+  }
   const user = await User.findByUserName(userName);
   await user.watchList.push(movie._id);
   var dedupe = require('dedupe');
@@ -145,10 +192,10 @@ router.put('/:userName/userInfo', async (req, res, next) => {
       .then(user => res.json(200, user)).catch(next);
     });
   }else {
-    res.status(401).json({
-      code: 401,
-      msg: 'lack full user information.'
-    });
+    const err = new Error(`Request body must contain a contact name property`);
+    err.status = 'fail';
+    err.statusCode = 400;
+    next(err);
   }
 });
 
