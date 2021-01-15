@@ -55,22 +55,28 @@ deploy_staging:
 
 
 continuous_delivery:
+  image: ruby:latest
   stage: deploy
   only:
     - develop
+  before_script:
+    - apt-get update -qy
+    - apt-get install -y ruby-dev
+    - gem install dpl
   script:  
-    - npm i
-    # your build command
-    - npm run build
-    - npx netlify-cli deploy --site $NETLIFY_SITE_ID --auth $NETLIFY_AUTH_TOKEN --prod
+    - dpl --provider=heroku --app=$HEROKU_APP_NAME_STAGING --api-key=$HEROKU_API_KEY
+    - echo "Deployed to staging server"
   when: manual
 
 continuous_deployment:
+  image: ruby:latest
   stage: deploy
   only:
      - master
+  before_script:
+    - apt-get update -qy
+    - apt-get install -y ruby-dev
+    - gem install dpl
   script:  
-    - npm i
-    # your build command
-    - npm run build
-    - npx netlify-cli deploy --site $NETLIFY_SITE_ID --auth $NETLIFY_AUTH_TOKEN --prod
+    - dpl --provider=heroku --app=$HEROKU_APP_NAME_STAGING --api-key=$HEROKU_API_KEY
+    - echo "Deployed to staging server"
