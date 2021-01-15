@@ -4,11 +4,12 @@ import jwt from 'jsonwebtoken';
 import movieModel from '../movies/movieModel';
 import topRatedMovieModel from '../movies/topRatedMovieModel';
 import upcomingMovieModel from '../movies/upcomingMovieModel';
+import passport from '../../authenticate';
 
 const router = express.Router(); // eslint-disable-line
 
 // Get all users
-router.get('/', (req, res, next) => {
+router.get('/', passport.authenticate('jwt', {session: false}), (req, res, next) => {
     User.find().then(users =>  res.status(200).json(users)).catch(next);
 });
 
@@ -83,7 +84,7 @@ router.put('/:id',  (req, res, next) => {
 });
 
 //Add a favourite. No Error Handling Yet. Can add duplicates too!
-router.post('/:userName/favourites', async (req, res, next) => {
+router.post('/:userName/favourites', passport.authenticate('jwt', {session: false}), async (req, res, next) => {
   const newFavourite = req.body.id;
   if(!newFavourite){
     const err = new Error(`Please enter movie id.`);
@@ -107,14 +108,14 @@ router.post('/:userName/favourites', async (req, res, next) => {
   res.status(201).json(user); 
 });
 
-router.get('/:userName/favourites', (req, res, next) => {
+router.get('/:userName/favourites', passport.authenticate('jwt', {session: false}), (req, res, next) => {
   const userName = req.params.userName;
   User.findByUserName(userName).populate('favourites').then(
     user => res.status(201).json(user.favourites)
   ).catch(next);
 });
 
-router.post('/:userName/collections', async (req, res, next) => {
+router.post('/:userName/collections', passport.authenticate('jwt', {session: false}), async (req, res, next) => {
   const collections = req.body.id;
   if(!collections){
     const err = new Error(`Please enter movie id.`);
@@ -138,14 +139,14 @@ router.post('/:userName/collections', async (req, res, next) => {
   res.status(201).json(user); 
 });
 
-router.get('/:userName/collections', (req, res, next) => {
+router.get('/:userName/collections', passport.authenticate('jwt', {session: false}), (req, res, next) => {
   const userName = req.params.userName;
   User.findByUserName(userName).populate('collections').then(
     user => res.status(201).json(user.collections)
   ).catch(next);
 });
 
-router.post('/:userName/watchList', async (req, res, next) => {
+router.post('/:userName/watchList', passport.authenticate('jwt', {session: false}), async (req, res, next) => {
   const watchList = req.body.id;
   if(!watchList){
     const err = new Error(`Please enter movie id.`);
@@ -169,7 +170,7 @@ router.post('/:userName/watchList', async (req, res, next) => {
   res.status(201).json(user); 
 });
 
-router.get('/:userName/watchList', (req, res, next) => {
+router.get('/:userName/watchList', passport.authenticate('jwt', {session: false}), (req, res, next) => {
   const userName = req.params.userName;
   User.findByUserName(userName).populate('watchList').then(
     user => res.status(201).json(user.watchList)
@@ -177,14 +178,14 @@ router.get('/:userName/watchList', (req, res, next) => {
 });
 
 
-router.get('/:userName/userInfo', (req, res, next) => {
+router.get('/:userName/userInfo', passport.authenticate('jwt', {session: false}), (req, res, next) => {
   const userName = req.params.userName;
   User.findByUserName(userName).then(
     user => res.status(201).json(user.userInfo)
   ).catch(next);
 });
 
-router.put('/:userName/userInfo', async (req, res, next) => { 
+router.put('/:userName/userInfo', passport.authenticate('jwt', {session: false}), async (req, res, next) => { 
   if(req.body.gender && req.body.birthday && req.body.hobby && req.body.movies && req.body.actors && req.body.introduce){
     User.findOneAndUpdate({username: req.params.userName},{userInfo:req.body})
     .then(function(){
