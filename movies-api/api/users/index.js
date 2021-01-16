@@ -193,7 +193,7 @@ router.put('/:userName/userInfo', passport.authenticate('jwt', {session: false})
       .then(user => res.json(200, user)).catch(next);
     });
   }else {
-    const err = new Error(`Request body must contain a contact name property`);
+    const err = new Error(`Lack userInfo propoerty`);
     err.status = 'fail';
     err.statusCode = 400;
     next(err);

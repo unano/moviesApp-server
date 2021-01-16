@@ -38,6 +38,7 @@ const samplePersonalInfo2 = {
 
 let db;
 let api;
+let token;
 
 const users = [
   {
@@ -86,6 +87,16 @@ describe("Users endpoint", () => {
     } catch (err) {
       console.error(`failed to Load user Data: ${err}`);
     }
+    return request(api)
+        .post("/api/users")
+        .send({
+          username: "user1",
+          password: "test1",
+        })
+        // .expect(200)
+        .then((res) => {
+          token= res.body.token;
+        });
 
   });
   afterEach(() => {
@@ -96,6 +107,7 @@ describe("Users endpoint", () => {
     it("should return the 2 users and a status 200", (done) => {
       request(api)
         .get("/api/users")
+        .set("Authorization", token)
         .set("Accept", "application/json")
         .expect("Content-Type", /json/)
         .expect(200)
@@ -110,7 +122,7 @@ describe("Users endpoint", () => {
   });
 
   describe("POST / ", () => {
-    describe("when the password is valid", () => {
+    describe("when the username and password is valid", () => {
       it("should return a 201 status and the confirmation message", () => {
         return request(api)
           .post("/api/users?action=register")
@@ -124,6 +136,7 @@ describe("Users endpoint", () => {
       after(() => {
         return request(api)
           .get("/api/users")
+          .set("Authorization", token)
           .set("Accept", "application/json")
           .expect("Content-Type", /json/)
           .expect(200)
@@ -135,36 +148,56 @@ describe("Users endpoint", () => {
           });
       });
     });
-    describe("when the password length is too short", () => {
-      it("should return a 401 status and the error message", () => {
-        return request(api)
-          .post("/api/users?action=register")
-          .send({
-            username: "user3",
-            password: "tes3",
-          })
-          .expect(401)
-          .expect({ 
-            success: false,
-            msg: "Password is at least 5 characters long and contain at least one number and one letter."
-          });
+    describe("when the username is invalid", () => {
+      describe("when the username length is too short", () => {
+        it("should return a 500 status and the error message", () => {
+          return request(api)
+            .post("/api/users?action=register")
+            .send({
+              username: "u",
+              password: "test3",
+            })
+            .expect(500)
+            .expect({ 
+              "status": "error",
+              "message": "User validation failed: username: Validator failed for path `username` with value `u`"
+            });
+        });
       });
     });
-    describe("when the password don't have at least one number and one letter", () => {
-      it("should return a 401 status and the error message", () => {
-        return request(api)
-          .post("/api/users?action=register")
-          .send({
-            username: "user3",
-            password: "testaa",
-          })
-          .expect(401)
-          .expect({ 
-            success: false,
-            msg: "Password is at least 5 characters long and contain at least one number and one letter."
-          });
+
+    describe("when the password is invalid", () => {
+      describe("when the password length is too short", () => {
+        it("should return a 400 status and the error message", () => {
+          return request(api)
+            .post("/api/users?action=register")
+            .send({
+              username: "user3",
+              password: "tes3",
+            })
+            .expect(400)
+            .expect({ 
+              "status": "fail",
+              "message": "Password is at least 5 characters long and contain at least one number and one letter."
+            });
+        });
       });
-    });
+      describe("when the password don't have at least one number and one letter", () => {
+        it("should return a 400 status and the error message", () => {
+          return request(api)
+            .post("/api/users?action=register")
+            .send({
+              username: "user3",
+              password: "testaa",
+            })
+            .expect(400)
+            .expect({ 
+              "status": "fail",
+              "message": "Password is at least 5 characters long and contain at least one number and one letter."
+            });
+        });
+      });
+  });
   });
   
   describe("POST / ", () => {
@@ -183,34 +216,36 @@ describe("Users endpoint", () => {
           });
       });
     });
-    describe("when the username input is incorrect", () => {
-      it("should return a 200 status and the message", () => {
-        return request(api)
-          .post("/api/users")
-          .send({
-            username: "user",
-            password: "test1",
-          })
-          .expect(401)
-          .expect({ 
-            code: 401,
-            msg: "Authentication failed. User not found."
-          });
+    describe("when the input is incorrect", () => {
+      describe("when the username input is incorrect", () => {
+        it("should return a 400 status and the error message", () => {
+          return request(api)
+            .post("/api/users")
+            .send({
+              username: "user",
+              password: "test1",
+            })
+            .expect(400)
+            .expect({ 
+              "status": "fail",
+              "message": "Authentication failed. User not found."
+            });
+        });
       });
-    });
-    describe("when the password input is incorrect", () => {
-      it("should return a 200 status and the message", () => {
-        return request(api)
-          .post("/api/users")
-          .send({
-            username: "user1",
-            password: "test",
-          })
-          .expect(401)
-          .expect({ 
-            code: 401,
-            "msg": "Authentication failed. Wrong password."
-          });
+      describe("when the password input is incorrect", () => {
+        it("should return a 400 status and the error message", () => {
+          return request(api)
+            .post("/api/users")
+            .send({
+              username: "user1",
+              password: "test",
+            })
+            .expect(400)
+            .expect({ 
+              "status": "fail",
+              "message": "Authentication failed. Wrong password."
+            });
+        });
       });
     });
   });
@@ -221,6 +256,7 @@ describe("Users endpoint", () => {
     it("should return 0 movie and a status 200", (done) => {
       request(api)
         .get("/api/users/user1/favourites")
+        .set("Authorization", token)
         .set("Accept", "application/json")
         .expect("Content-Type", /json/)
         .expect(200)
@@ -239,6 +275,7 @@ describe("Users endpoint", () => {
       it("should return the saved movie id and a 201 status", () => {
         return request(api)
           .post("/api/users/user1/favourites")
+          .set("Authorization", token)
           .send({id:sampleMovie.id})
           .expect(201)
           .then((res) => {
@@ -249,6 +286,7 @@ describe("Users endpoint", () => {
       after(() => {
         return request(api)
           .get("/api/users/user1/favourites")
+          .set("Authorization", token)
           .set("Accept", "application/json")
           .expect("Content-Type", /json/)
           .expect(201)
@@ -261,14 +299,15 @@ describe("Users endpoint", () => {
       });
     });
     describe("when the movie id doesn't exist", () => {
-      it("should return a 401 status and a error message", () => {
+      it("should return a 400 status and a error message", () => {
         return request(api)
           .post("/api/users/user1/favourites")
+          .set("Authorization", token)
           .send({id:9999})
-          .expect(401)
+          .expect(400)
           .expect({ 
-            code: 401,
-            msg: "Movie not found."
+            "status": "fail",
+            "message":"Movie not found."
           });
       });
     });
@@ -281,6 +320,7 @@ describe("Users endpoint", () => {
     it("should return 0 movie and a status 200", (done) => {
       request(api)
         .get("/api/users/user1/watchList")
+        .set("Authorization", token)
         .set("Accept", "application/json")
         .expect("Content-Type", /json/)
         .expect(200)
@@ -299,6 +339,7 @@ describe("Users endpoint", () => {
       it("should return the saved movie id and a 201 status", () => {
         return request(api)
           .post("/api/users/user1/watchList")
+          .set("Authorization", token)
           .send({id:sampleUpcomingMovie.id})
           .expect(201)
           .then((res) => {
@@ -309,6 +350,7 @@ describe("Users endpoint", () => {
       after(() => {
         return request(api)
           .get("/api/users/user1/watchList")
+          .set("Authorization", token)
           .set("Accept", "application/json")
           .expect("Content-Type", /json/)
           .expect(201)
@@ -321,14 +363,15 @@ describe("Users endpoint", () => {
       });
     });
     describe("when the movie id doesn't exist", () => {
-      it("should return a 401 status and a error message", () => {
+      it("should return a 400 status and a error message", () => {
         return request(api)
           .post("/api/users/user1/watchList")
+          .set("Authorization", token)
           .send({id:9999})
-          .expect(401)
+          .expect(400)
           .expect({ 
-            code: 401,
-            msg: "Movie not found."
+            "status": "fail",
+            "message": "Movie not found."
           });
       });
     });
@@ -340,6 +383,7 @@ describe("Users endpoint", () => {
     it("should return 0 movie and a status 200", (done) => {
       request(api)
         .get("/api/users/user1/collections")
+        .set("Authorization", token)
         .set("Accept", "application/json")
         .expect("Content-Type", /json/)
         .expect(200)
@@ -358,6 +402,7 @@ describe("Users endpoint", () => {
       it("should return the saved movie id and a 201 status", () => {
         return request(api)
           .post("/api/users/user1/collections")
+          .set("Authorization", token)
           .send({id:sampleTopRatedMovie.id})
           .expect(201)
           .then((res) => {
@@ -368,6 +413,7 @@ describe("Users endpoint", () => {
       after(() => {
         return request(api)
           .get("/api/users/user1/collections")
+          .set("Authorization", token)
           .set("Accept", "application/json")
           .expect("Content-Type", /json/)
           .expect(201)
@@ -380,14 +426,15 @@ describe("Users endpoint", () => {
       });
     });
     describe("when the movie id doesn't exist", () => {
-      it("should return a 401 status and a error message", () => {
+      it("should return a 400 status and a error message", () => {
         return request(api)
           .post("/api/users/user1/collections")
+          .set("Authorization", token)
           .send({id:9999})
-          .expect(401)
+          .expect(400)
           .expect({ 
-            code: 401,
-            msg: "Movie not found."
+            "status": "fail",
+            "message": "Movie not found."
           });
       });
     });
@@ -398,6 +445,7 @@ describe("Users endpoint", () => {
     it("should return a status 200 and user information", (done) => {
       request(api)
         .get("/api/users/user1/userInfo")
+        .set("Authorization", token)
         .set("Accept", "application/json")
         .expect("Content-Type", /json/)
         .expect(200)
@@ -414,26 +462,48 @@ describe("Users endpoint", () => {
   });
 
   describe("PUT /:userName/userInfo ", () => {
-    it("should return status 200 and the updated user information", (done) => {
-      request(api)
+    describe("when the iserInfo input is correct", () => {
+      it("should return status 200 and the updated user information", (done) => {
+        request(api)
+          .put("/api/users/user1/userInfo")
+          .set("Authorization", token)
+          .send({
+            gender:"female",
+            birthday:"2000-03-03",
+            hobby:"sport2",
+            movies:"movie3",
+            actors:"actor3",
+            introduce:"I'm who ok"
+          })
+          .expect(200)
+          .end((err, res) => {
+            expect(res.body.userInfo.gender).to.equal(samplePersonalInfo2.gender);
+            expect(res.body.userInfo.birthday).to.equal(samplePersonalInfo2.birthday);
+            expect(res.body.userInfo.hobby).to.equal(samplePersonalInfo2.hobby);
+            expect(res.body.userInfo.movies).to.equal(samplePersonalInfo2.movies);
+            expect(res.body.userInfo.actors).to.equal(samplePersonalInfo2.actors);
+            expect(res.body.userInfo.introduce).to.equal(samplePersonalInfo2.introduce);
+            done();
+          });
+      });
+    });
+    describe("when the userInfo input is incorrect", () => {
+      it("should return status 400 and the error message", () => {
+        return request(api)
         .put("/api/users/user1/userInfo")
+        .set("Authorization", token)
         .send({
-          gender:"female",
           birthday:"2000-03-03",
           hobby:"sport2",
           movies:"movie3",
           actors:"actor3",
           introduce:"I'm who ok"
         })
-        .expect(200)
-        .end((err, res) => {
-          expect(res.body.userInfo.gender).to.equal(samplePersonalInfo2.gender);
-          expect(res.body.userInfo.birthday).to.equal(samplePersonalInfo2.birthday);
-          expect(res.body.userInfo.hobby).to.equal(samplePersonalInfo2.hobby);
-          expect(res.body.userInfo.movies).to.equal(samplePersonalInfo2.movies);
-          expect(res.body.userInfo.actors).to.equal(samplePersonalInfo2.actors);
-          expect(res.body.userInfo.introduce).to.equal(samplePersonalInfo2.introduce);
-          done();
+        .expect(400)
+          .expect({ 
+            "status": "fail",
+            "message": "Lack userInfo propoerty"
+          });
         });
     });
   });
