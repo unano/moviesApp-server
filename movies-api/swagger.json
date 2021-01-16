@@ -66,8 +66,14 @@
                 "tags": [
                     "Users"
                 ],
-                "summary": "Authentication/Register users",
+                "summary": "User authentication/register ",
                 "parameters": [
+                    {
+                        "in":"query",
+                        "name": "action",
+                        "description": "enter 'register' to regist",
+                        "type": "string"
+                    },
                     {
                         "in":"body",
                         "name": "body",
@@ -310,6 +316,41 @@
                     }
                 ],
                 "summary": "Add movie to watchList",
+                "parameters": [
+                    {
+                        "in":"body",
+                        "name": "body",
+                        "description": "movie id",
+                        "schema":{
+                            "properties": {
+                                "id":{ "type": "number" }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                        }
+                    },
+                    "400": {
+                        "description": "Failed",
+                        "schema": {
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Users"
+                ],
+                "security": [
+                    {
+                        "JWT":[]
+                    }
+                ],
+                "summary": "Delete movie from watchList",
                 "parameters": [
                     {
                         "in":"body",
