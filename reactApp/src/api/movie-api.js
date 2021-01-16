@@ -21,7 +21,8 @@ export const signup = (username, password) => {
 export const addFavorites = (userName, id) => {
   return fetch(`/api/users/${userName}/favourites`, {
       headers: {
-          'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': window.localStorage.getItem('token')
       },
       method: 'post',
       body: JSON.stringify({ id: id })
@@ -31,7 +32,7 @@ export const addFavorites = (userName, id) => {
 export const getFavourite = (userName) => {
   return fetch(
     `/api/users/${userName}/favourites`,{headers: {
-     'Content-Type': 'application/json'
+      'Authorization': window.localStorage.getItem('token')
    }
  }
  ).then(res => res.json());
@@ -40,7 +41,8 @@ export const getFavourite = (userName) => {
 export const addWatchList = (userName, id) => {
   return fetch(`/api/users/${userName}/watchList`, {
       headers: {
-          'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': window.localStorage.getItem('token')
       },
       method: 'post',
       body: JSON.stringify({ id: id })
@@ -50,7 +52,7 @@ export const addWatchList = (userName, id) => {
 export const getWatchList = (userName) => {
   return fetch(
     `/api/users/${userName}/watchList`,{headers: {
-     'Content-Type': 'application/json'
+      'Authorization': window.localStorage.getItem('token')
    }
  }
  ).then(res => res.json());
@@ -59,7 +61,8 @@ export const getWatchList = (userName) => {
 export const addCollections = (userName, id) => {
   return fetch(`/api/users/${userName}/collections`, {
       headers: {
-          'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': window.localStorage.getItem('token')
       },
       method: 'post',
       body: JSON.stringify({ id: id })
@@ -69,7 +72,7 @@ export const addCollections = (userName, id) => {
 export const getCollections = (userName) => {
   return fetch(
     `/api/users/${userName}/collections`,{headers: {
-     'Content-Type': 'application/json'
+     'Authorization': window.localStorage.getItem('token')
    }
  }
  ).then(res => res.json());
@@ -78,7 +81,8 @@ export const getCollections = (userName) => {
 export const editInfo = (userName, info) => {
   return fetch(`/api/users/${userName}/userInfo`, {
       headers: {
-          'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': window.localStorage.getItem('token')
       },
       method: 'put',
       body: JSON.stringify(info)
@@ -88,7 +92,7 @@ export const editInfo = (userName, info) => {
 export const getInfo = (userName) => {
   return fetch(
     `/api/users/${userName}/userInfo`,{headers: {
-     'Content-Type': 'application/json'
+      'Authorization': window.localStorage.getItem('token')
    }
  }
  ).then(res => res.json());
@@ -106,7 +110,7 @@ export const getMovies = () => {
 export const getGenres = () => {
     return fetch(
        '/api/genres',{headers: {
-        'Content-Type': 'application/json'
+        'Authorization': window.localStorage.getItem('token')
       }
     }
     ).then(res => res.json());
