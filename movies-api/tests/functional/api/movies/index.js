@@ -11,7 +11,6 @@ import {upcoming} from '../../../../seedData/upcoming.js';
 const expect = chai.expect;
 
 let api;
-let token;
 
 const sampleMovie = {
   id: 337401,
@@ -59,16 +58,6 @@ describe("Movies endpoint", () => {
       } catch (err) {
       console.error(`failed to Load movie Data: ${err}`);
       }
-    return request(api)
-        .post("/api/users")
-        .send({
-          username: "user1",
-          password: "test1",
-        })
-        .expect(200)
-        .then((res) => {
-          token= res.body.token;
-        });
   });
   afterEach(() => {
     api.close(); // Release PORT 8080
@@ -78,7 +67,6 @@ describe("Movies endpoint", () => {
     it("should return 20 movies and a status 200", () => {
       return request(api)
         .get("/api/movies")
-        .set("Authorization", token)
         .set("Accept", "application/json")
         .expect("Content-Type", /json/)
         .expect(200)
@@ -94,7 +82,6 @@ describe("Movies endpoint", () => {
       it("should return the matching movie", () => {
         return request(api)
           .get(`/api/movies/${sampleMovie.id}`)
-          .set("Authorization", token)
           .set("Accept", "application/json")
           .expect("Content-Type", /json/)
           .expect(200)
@@ -107,7 +94,6 @@ describe("Movies endpoint", () => {
       it("should return the NOT found message", () => {
         return request(api)
           .get("/api/movies/xxx")
-          .set("Authorization", token)
           .set("Accept", "application/json")
           .expect("Content-Type", /json/)
           .expect({
@@ -123,7 +109,6 @@ describe("Movies endpoint", () => {
   it("should return 20 upcoming movies and a status 200", () => {
     return request(api)
       .get("/api/movies/upcoming")
-      .set("Authorization", token)
       .set("Accept", "application/json")
       .expect("Content-Type", /json/)
       .expect(200)
@@ -138,7 +123,6 @@ describe("Movies endpoint", () => {
     it("should return 20 topRated movies and a status 200", () => {
       return request(api)
         .get("/api/movies/topRated")
-        .set("Authorization", token)
         .set("Accept", "application/json")
         .expect("Content-Type", /json/)
         .expect(200)
@@ -152,7 +136,6 @@ describe("Movies endpoint", () => {
     it("should return movie reviews and a status 200", () => {
       return request(api)
         .get(`/api/movies/${sampleMovie.id}/reviews`)
-        .set("Authorization", token)
         .set("Accept", "application/json")
         .expect("Content-Type", /json/)
         .expect(200)
@@ -166,7 +149,6 @@ describe("Movies endpoint", () => {
     it("should return similar movies and a status 200", () => {
       return request(api)
         .get(`/api/movies/${sampleMovie.id}/similar`)
-        .set("Authorization", token)
         .set("Accept", "application/json")
         .expect("Content-Type", /json/)
         .expect(200)

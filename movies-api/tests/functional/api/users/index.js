@@ -103,6 +103,15 @@ describe("Users endpoint", () => {
     api.close();
     delete require.cache[require.resolve("../../../../index")];
   });
+  describe("Unauthorization", () =>{
+    it("should return Unauthorized", () =>{
+      return request(api)
+        .get("/api/users")
+        .set("Accept", "application/json")
+        .expect(401)
+        .expect({});
+    });
+  });
   describe("GET / ", () => {
     it("should return the 2 users and a status 200", (done) => {
       request(api)

@@ -7,6 +7,13 @@
     },
     "host": "localhost:8080",
     "basePath": "",
+    "securityDefinitions": {
+        "JWT":{
+        "type": "apiKey",
+        "name": "Authorization",
+        "in": "header"
+        }
+    },
     "tags": [
         {
             "name": "Users",
@@ -41,6 +48,11 @@
                 "tags": [
                     "Users"
                 ],
+                "security": [
+                    {
+                        "JWT":[]
+                    }
+                ],
                 "summary": "List users",
                 "responses": {
                     "200": {
@@ -61,6 +73,10 @@
                         "name": "body",
                         "description": "username and password for login/registration",
                         "schema":{
+                            "properties": {
+                                "username":{ "type": "string" },
+                                "password":{ "type": "string" }
+                            }
                         }
                     }
                 ],
@@ -68,6 +84,7 @@
                     "200": {
                         "description": "OK",
                         "schema" :{
+                            "$ref": "#definitions/User"
                         }
                     },
                     "400": {
@@ -94,13 +111,20 @@
                 "tags": [
                     "Users"
                 ],
+                "security": [
+                    {
+                        "JWT":[]
+                    }
+                ],
                 "parameters": [
                     {
                         "in":"body",
                         "name":"body",
                         "required": true,
                         "description": "_id of the user",
-                        "schema": {}
+                        "schema": {
+                            "$ref": "#definitions/User"
+                        }
                     }
                 ],
                 "responses": {
@@ -132,6 +156,11 @@
                 "tags" :[
                     "Users"
                 ],
+                "security": [
+                    {
+                        "JWT":[]
+                    }
+                ],
                 "summary": "Get user favourites",
                 "responses" :{
                     "200": {
@@ -145,6 +174,11 @@
                 "tags": [
                     "Users"
                 ],
+                "security": [
+                    {
+                        "JWT":[]
+                    }
+                ],
                 "summary": "Add movie to favourite",
                 "parameters": [
                     {
@@ -152,6 +186,9 @@
                         "name": "body",
                         "description": "movie id",
                         "schema":{
+                            "properties": {
+                                "id":{ "type": "number" }
+                            }
                         }
                     }
                 ],
@@ -184,11 +221,16 @@
                 "tags" :[
                     "Users"
                 ],
+                "security": [
+                    {
+                        "JWT":[]
+                    }
+                ],
                 "summary": "Get user collections",
                 "responses" :{
                     "200": {
                         "description" : "OK",
-                        "schema" :{
+                        "schema":{
                         }
                     }
                 }
@@ -197,6 +239,11 @@
                 "tags": [
                     "Users"
                 ],
+                "security": [
+                    {
+                        "JWT":[]
+                    }
+                ],
                 "summary": "Add movie to collections",
                 "parameters": [
                     {
@@ -204,13 +251,16 @@
                         "name": "body",
                         "description": "movie id",
                         "schema":{
+                            "properties": {
+                                "id":{ "type": "number" }
+                            }
                         }
                     }
                 ],
                 "responses": {
                     "200": {
                         "description": "OK",
-                        "schema": {   
+                        "schema": { 
                         }
                     },
                     "400": {
@@ -236,6 +286,11 @@
                 "tags" :[
                     "Users"
                 ],
+                "security": [
+                    {
+                        "JWT":[]
+                    }
+                ],
                 "summary": "Get user watchList",
                 "responses" :{
                     "200": {
@@ -249,6 +304,11 @@
                 "tags": [
                     "Users"
                 ],
+                "security": [
+                    {
+                        "JWT":[]
+                    }
+                ],
                 "summary": "Add movie to watchList",
                 "parameters": [
                     {
@@ -256,6 +316,9 @@
                         "name": "body",
                         "description": "movie id",
                         "schema":{
+                            "properties": {
+                                "id":{ "type": "number" }
+                            }
                         }
                     }
                 ],
@@ -288,6 +351,11 @@
                 "tags" :[
                     "Users"
                 ],
+                "security": [
+                    {
+                        "JWT":[]
+                    }
+                ],
                 "summary": "Get user information",
                 "responses" :{
                     "200": {
@@ -301,6 +369,11 @@
                 "tags": [
                     "Users"
                 ],
+                "security": [
+                    {
+                        "JWT":[]
+                    }
+                ],
                 "summary": "Update user information",
                 "parameters": [
                     {
@@ -309,6 +382,7 @@
                         "required": true,
                         "description": "user information",
                         "schema":{
+                            "$ref": "#definitions/UserInfo"
                         }
                     }
                 ],
@@ -337,7 +411,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            
+                            "$ref": "#definitions/Movies"
                         }
                     }
                 }
@@ -354,7 +428,7 @@
                     "200": {
                         "description" : "OK",
                         "schema" :{
-
+                            "$ref": "#definitions/UpcomingMovie"
                         }
                     }
                 }
@@ -371,7 +445,7 @@
                     "200": {
                         "description" : "OK",
                         "schema" :{
-
+                            "$ref": "#definitions/TopRatedMovie"
                         }
                     }
                 }
@@ -397,7 +471,6 @@
                     "200": {
                         "description" : "OK",
                         "schema" :{
-
                         }
                     }
                 }
@@ -449,7 +522,6 @@
                     "200": {
                         "description" : "OK",
                         "schema" :{
-
                         }
                     }
                 }
@@ -466,7 +538,6 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            
                         }
                     }
                 }
@@ -483,6 +554,7 @@
                     "200": {
                         "description": "OK",
                         "schema": { 
+                            "$ref": "#definitions/People"
                         }
                     }
                 }
@@ -507,8 +579,8 @@
                 "responses": {
                     "200": {
                         "description": "OK",
-                        "schema": {
-                            
+                        "schema": {  
+                            "$ref": "#definitions/People"
                         }
                     }
                 }
@@ -533,11 +605,182 @@
                 "responses": {
                     "200": {
                         "description": "OK",
-                        "schema": {
-                            
+                        "schema": {           
                         }
                     }
                 }
+            }
+        }
+    },
+    "definitions": {
+        "Movie": {
+            "properties": {
+                "adult": { "type": "boolean" },
+                "id": { "type": "number"},
+                "poster_path": { "type": "string" },
+                "overview": { "type": "string" },
+                "release_date": { "type": "string" },
+                "original_title": { "type": "string" },
+                "genre_ids": {
+                    "type":"array",
+                    "items": {
+                        "type":"string"
+                    }
+                },
+                "original_language": { "type": "string" },
+                "title": { "type": "string" },
+                "backdrop_path": { "type": "string" },
+                "popularity": { "type": "number"},
+                "vote_count": { "type": "number"},
+                "video": { "type": "boolean" },
+                "vote_average": { "type": "number"},
+                "production_countries": {
+                    "type":"array",
+                    "items": {
+                        "type":"object",
+                        "properties":{
+                            "iso_3166_1": { "type": "string" },
+                            "name": { "type": "string" }
+                        }
+                    }
+                },
+                "runtime": { "type": "number"},
+                "spoken_languages": {
+                    "type":"array",
+                    "items": {
+                        "type":"object",
+                        "properties": {
+                            "iso_639_1": { "type": "string" },
+                            "name": { "type": "string" }
+                        }
+                    }
+                },
+                "status": { "type": "string" },
+                "tagline": { "type": "string" }
+            }
+        },
+        "TopRatedMovie": {
+            "properties": {
+                "adult": { "type": "boolean" },
+                "backdrop_path": { "type": "string" },
+                "genre_ids": {
+                    "type":"array",
+                    "items": {
+                        "type":"string"
+                    }
+                },
+                "id": { "type": "number"},
+                "original_language": { "type": "string" },
+                "original_title": { "type": "string" },
+                "overview": { "type": "string" },
+                "popularity": { "type": "number"},
+                "poster_path": { "type": "string" },
+                "release_date": { "type": "string" },
+                "title": { "type": "string" },
+                "video": { "type": "boolean" },
+                "vote_average": { "type": "number"},
+                "vote_count": { "type": "number"}
+            }
+        },
+        "UpcomingMovie": {
+            "properties": {
+                "adult": { "type": "boolean" },
+                "backdrop_path": { "type": "string" },
+                "genre_ids": {
+                    "type":"array",
+                    "items": {
+                        "type":"string"
+                    }
+                },
+                "id": { "type": "number"},
+                "original_language": { "type": "string" },
+                "original_title": { "type": "string" },
+                "overview": { "type": "string" },
+                "popularity": { "type": "number"},
+                "poster_path": { "type": "string" },
+                "release_date": { "type": "string" },
+                "title": { "type": "string" },
+                "video": { "type": "boolean" },
+                "vote_average": { "type": "number"},
+                "vote_count": { "type": "number"}
+            }
+        },
+        "People": {
+            "properties": {
+                "adult": { "type": "boolean" },
+                "gender": { "type": "number"},
+                "id": { "type": "number"},
+                "known_for":{ 
+                    "type": "array",
+                    "items": {
+                        "type":"object",
+                        "properties":{
+                        "adult": { "type": "boolean" },
+                        "backdrop_path": { "type": "string" },
+                        "genre_ids": {
+                            "type":"array",
+                            "items": {
+                                "type":"string"
+                            }
+                        },
+                        "id": { "type": "number"},
+                        "media_type": { "type": "string" },
+                        "original_language": { "type": "string" },
+                        "original_title": { "type": "string" },
+                        "overview": { "type": "string" },
+                        "poster_path": { "type": "string" },
+                        "release_date": { "type": "string" },
+                        "title": { "type": "string" },
+                        "video": { "type": "boolean" },
+                        "vote_average": { "type": "number"},
+                        "vote_count": { "type": "number"}
+                        }
+                    }
+                },
+                "known_for_department": { "type": "string" },
+                "name":  { "type": "string" },
+                "popularity": { "type": "number"},
+                "profile_path": { "type": "string" }
+            }
+        },
+        "User":{
+            "properties": {
+                "username": { "type": "string" },
+                "password": { "type": "string" },
+                "favourites": {
+                    "type":"array",
+                    "items": {
+                        "type":"string"
+                    }
+                },
+                "collections":  {
+                    "type":"array",
+                    "items": {
+                        "type":"string"
+                    }
+                },
+                "watchList":  {
+                    "type":"array",
+                    "items": {
+                        "type":"string"
+                    }
+                },
+                "userInfo":{
+                    "type":"object",
+                    "additionalProperties": {
+                        "$ref": "#definitions/UserInfo"
+                    }
+                }
+            }
+        },
+        "UserInfo" : {
+            "properties": {
+                "gender":{ "type": "string" },
+                "birthday":{ "type": "string" },
+                "hobby":{ "type": "string" },
+                "movies":{ "type": "string" },
+                "actors":{ "type": "string" },
+                "introduce":{ "type": "string" }
             }
         }
     }
