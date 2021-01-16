@@ -9,7 +9,7 @@
     "compile:moviemodels": "babel ./api/movies --out-dir build/api/movies",
     "compile:usermodels": "babel ./api/users --out-dir build/api/users",
     "compile:genresmodels": "babel ./api/genres --out-dir build/api/genres",
-    "compile:peoplemodels": "babel ./api/people --out-dir build/api/people", 
+    "compile:peoplemodels": "babel ./api/people --out-dir build/api/people",
     "compile:tmdb": "babel ./api/tmdb-api --out-dir build/api/tmdb-api",
     "compile:models": "npm-run-all compile:moviemodels compile:usermodels compile:genresmodels compile:peoplemodels compile:tmdb",
     "compile:authenticate": "babel ./authenticate --out-dir build/authenticate",
@@ -55,6 +55,7 @@
     "morgan": "^1.10.0",
     "node-fetch": "^2.6.1",
     "passport": "^0.4.1",
-    "passport-jwt": "^4.0.0"
+    "passport-jwt": "^4.0.0",
+    "swagger-ui-express": "^4.1.6"
   }
 }

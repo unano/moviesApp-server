@@ -14,6 +14,8 @@ import helmet from 'helmet';
 import morgan from 'morgan';
 import path from 'path';
 import fs from  'fs';
+import swaggerUi from 'swagger-ui-express';
+import * as swaggerDoucment from './swagger.json';
 
 dotenv.config();
 
@@ -81,7 +83,7 @@ app.use('/api/users', usersRouter);
 app.use('/api/people', peopleRouter);
 app.use('/api/genres', genresRouter);
 app.use(errHandler);
-
+app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerDoucment)); 
 let server = app.listen(port, () => {
   loglevel.info(`Server running at ${port}`);
 });

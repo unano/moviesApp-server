@@ -1,0 +1,544 @@
+{
+    "swagger":"2.0",
+    "info": {
+        "version":"1.0.0",
+        "title":"MOVIES-API",
+        "description": "Persentations of all APIS in movies-api"
+    },
+    "host": "localhost:8080",
+    "basePath": "",
+    "tags": [
+        {
+            "name": "Users",
+            "description": "API for users"
+        },
+        {
+            "name": "Movies",
+            "description": "API for movies"
+        },
+        {
+            "name": "Genres",
+            "description": "API for genres"
+        },
+        {
+            "name": "People",
+            "description": "API for people"
+        }
+    ],
+    "schemes":[
+        "http",
+        "https"
+    ],
+    "consumes":[
+        "application/json"
+    ],
+    "produces":[
+        "application/json"
+    ],
+    "paths": {
+        "/api/users": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "List users",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Authentication/Register users",
+                "parameters": [
+                    {
+                        "in":"body",
+                        "name": "body",
+                        "description": "username and password for login/registration",
+                        "schema":{
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema" :{
+                        }
+                    },
+                    "400": {
+                        "description": "Failed",
+                        "schema" :{
+                        }
+                    }
+                }
+            }
+        },
+
+        "/api/users/{id}": {
+            "parameters": [
+                {
+                    "name":"id",
+                    "in": "path",
+                    "required": true,
+                    "description": "id of the user",
+                    "type": "string"
+                }
+            ],
+            "put": {
+                "summary": "Update user _id by id",
+                "tags": [
+                    "Users"
+                ],
+                "parameters": [
+                    {
+                        "in":"body",
+                        "name":"body",
+                        "required": true,
+                        "description": "_id of the user",
+                        "schema": {}
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                        }
+                    },
+                    "400": {
+                        "description": "OK",
+                        "schema": {
+                        }
+                    }
+                }
+            }
+        },
+
+        "/api/users/{username}/favourites": {
+            "parameters": [
+                {
+                    "name":"username",
+                    "in": "path",
+                    "required": true,
+                    "description": "username of the user",
+                    "type": "string"
+                }
+            ],
+            "get": {
+                "tags" :[
+                    "Users"
+                ],
+                "summary": "Get user favourites",
+                "responses" :{
+                    "200": {
+                        "description" : "OK",
+                        "schema" :{
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Add movie to favourite",
+                "parameters": [
+                    {
+                        "in":"body",
+                        "name": "body",
+                        "description": "movie id",
+                        "schema":{
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                        }
+                    },
+                    "400": {
+                        "description": "Failed",
+                        "schema": {
+                        }
+                    }
+                }
+            }
+        },
+
+        "/api/users/{username}/collections": {
+            "parameters": [
+                {
+                    "name":"username",
+                    "in": "path",
+                    "required": true,
+                    "description": "username of the user",
+                    "type": "string"
+                }
+            ],
+            "get": {
+                "tags" :[
+                    "Users"
+                ],
+                "summary": "Get user collections",
+                "responses" :{
+                    "200": {
+                        "description" : "OK",
+                        "schema" :{
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Add movie to collections",
+                "parameters": [
+                    {
+                        "in":"body",
+                        "name": "body",
+                        "description": "movie id",
+                        "schema":{
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {   
+                        }
+                    },
+                    "400": {
+                        "description": "Failed",
+                        "schema": {
+                        }
+                    }
+                }
+            }
+        },
+
+        "/api/users/{username}/watchList": {
+            "parameters": [
+                {
+                    "name":"username",
+                    "in": "path",
+                    "required": true,
+                    "description": "username of the user",
+                    "type": "string"
+                }
+            ],
+            "get": {
+                "tags" :[
+                    "Users"
+                ],
+                "summary": "Get user watchList",
+                "responses" :{
+                    "200": {
+                        "description" : "OK",
+                        "schema" :{
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Add movie to watchList",
+                "parameters": [
+                    {
+                        "in":"body",
+                        "name": "body",
+                        "description": "movie id",
+                        "schema":{
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                        }
+                    },
+                    "400": {
+                        "description": "Failed",
+                        "schema": {
+                        }
+                    }
+                }
+            }
+        },
+
+        "/api/users/{username}/userInfo": {
+            "parameters": [
+                {
+                    "name":"username",
+                    "in": "path",
+                    "required": true,
+                    "description": "username of the user",
+                    "type": "string"
+                }
+            ],
+            "get": {
+                "tags" :[
+                    "Users"
+                ],
+                "summary": "Get user information",
+                "responses" :{
+                    "200": {
+                        "description" : "OK",
+                        "schema" :{
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Update user information",
+                "parameters": [
+                    {
+                        "in":"body",
+                        "name": "body",
+                        "required": true,
+                        "description": "user information",
+                        "schema":{
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                        }
+                    },
+                    "400": {
+                        "description": "Failed",
+                        "schema": {
+                        }
+                    }
+                }
+            }
+        },
+
+        "/api/movies": {
+            "get": {
+                "tags": [
+                    "Movies"
+                ],
+                "summary": "List movies",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            
+                        }
+                    }
+                }
+            }   
+        },
+
+        "/api/movies/upcoming": {
+            "get": {
+                "tags" :[
+                    "Movies"
+                ],
+                "summary": "List upcoming movies",
+                "responses" :{
+                    "200": {
+                        "description" : "OK",
+                        "schema" :{
+
+                        }
+                    }
+                }
+            }
+        },
+
+        "/api/movies/topRated": {
+            "get": {
+                "tags" :[
+                    "Movies"
+                ],
+                "summary": "List topRated movies",
+                "responses" :{
+                    "200": {
+                        "description" : "OK",
+                        "schema" :{
+
+                        }
+                    }
+                }
+            }
+        },
+        
+        "/api/movies/{id}": {
+            "parameters": [
+                {
+                    "name":"id",
+                    "in": "path",
+                    "required": true,
+                    "description": "movie id",
+                    "type": "string"
+                }
+            ],
+            "get": {
+                "tags" :[
+                    "Movies"
+                ],
+                "summary": "Get a movie by id ",
+                "responses" :{
+                    "200": {
+                        "description" : "OK",
+                        "schema" :{
+
+                        }
+                    }
+                }
+            }
+        },
+
+        "/api/movies/{id}/reviews": {
+            "parameters": [
+                {
+                    "name":"id",
+                    "in": "path",
+                    "required": true,
+                    "description": "sss",
+                    "type": "string"
+                }
+            ],
+            "get": {
+                "tags" :[
+                    "Movies"
+                ],
+                "summary": "Get movie reviews by id",
+                "responses" :{
+                    "200": {
+                        "description" : "OK",
+                        "schema" :{
+
+                        }
+                    }
+                }
+            }
+        },
+
+        "/api/movies/{id}/similar": {
+            "parameters": [
+                {
+                    "name":"id",
+                    "in": "path",
+                    "required": true,
+                    "description": "dfdf",
+                    "type": "string"
+                }
+            ],
+            "get": {
+                "tags" :[
+                    "Movies"
+                ],
+                "summary": "List similar movies by id",
+                "responses" :{
+                    "200": {
+                        "description" : "OK",
+                        "schema" :{
+
+                        }
+                    }
+                }
+            }
+        },
+
+        "/api/genres": {
+            "get": {
+                "tags": [
+                    "Genres"
+                ],
+                "summary": "Get movie genres",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            
+                        }
+                    }
+                }
+            }
+        },
+
+        "/api/people": {
+            "get": {
+                "tags": [
+                    "People"
+                ],
+                "summary": "List movies actors",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": { 
+                        }
+                    }
+                }
+            }
+        },
+
+        "/api/people/{id}": {
+            "parameters": [
+                {
+                    "name": "id",
+                    "in":"path",
+                    "required": true,
+                    "description": "actor id",
+                    "type": "string"
+                }
+            ],
+            "get": {
+                "tags": [
+                    "People"
+                ],
+                "summary": "List movie actors' information",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            
+                        }
+                    }
+                }
+            }
+        },
+
+        "/api/people/{id}/movies": {
+            "parameters": [
+                {
+                    "name": "id",
+                    "in":"path",
+                    "required": true,
+                    "description": "actor id",
+                    "type": "string"
+                }
+            ],
+            "get": {
+                "tags": [
+                    "People"
+                ],
+                "summary": "List movies actors' performed movies",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
