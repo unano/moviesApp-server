@@ -1,42 +1,10 @@
 import React, { useState, createContext, useEffect, useReducer } from "react";
-import { getMovies, getUpcomingMovies, getTopRatedMovies, addFavorites, addWatchList, addCollections } from "../api/movie-api";
+import { getMovies, getUpcomingMovies, getTopRatedMovies, addFavorites, addWatchList, addCollections ,removeWatchList} from "../api/movie-api";
 
 export const MoviesContext = createContext(null);
 
 const reducer = (state, action) => {
   switch (action.type) {
-    // case "add-favorite":
-    //   return {
-    //     movies: state.movies.map((m) =>
-    //       m.id === action.payload.movie.id ? { ...m, favorite: true } : m
-    //     ),
-    //     upcoming: [...state.upcoming],
-    //     topRated: [...state.topRated]
-    //   };
-    // case "add-watchList":
-    //   return {
-    //     upcoming: state.upcoming.map((m) =>
-    //       m.id === action.payload.upcoming.id ? { ...m, watchList: true } : m
-    //   ),
-    //     movies: [...state.movies],
-    //     topRated: [...state.topRated]
-    //   };
-      case "remove-watchList":
-        return {
-          upcoming: state.upcoming.map((m) =>
-            m.id === action.payload.upcoming.id ? { ...m, watchList: false } : m
-        ),
-          movies: [...state.movies],
-          topRated: [...state.topRated]
-        };
-    // case "add-Collections":
-    //     return {
-    //       topRated: state.topRated.map((m) =>
-    //         m.id === action.payload.topRated.id ? { ...m, collections: true } : m
-    //     ),
-    //       movies: [...state.movies],
-    //       upcoming: [...state.upcoming]
-    //     };
     case "load":
       return { movies: action.payload.movies, upcoming: [...state.upcoming], topRated: [...state.topRated] };
     case "load-upcoming":
@@ -73,9 +41,8 @@ const MoviesContextProvider = (props) => {
   const addToWatchList = (userName,movieId) => {
     addWatchList(userName,movieId);
   };
-  const removeFromWatchList = (movieId) => {
-    const index = state.upcoming.map((m) => m.id).indexOf(movieId);
-    dispatch({ type: "remove-watchList", payload: { upcoming: state.upcoming[index] } });
+  const removeFromWatchList = (userName,movieId) => {
+    removeWatchList(userName,movieId);
   };
 
   const addToCollections = (userName,movieId) => {

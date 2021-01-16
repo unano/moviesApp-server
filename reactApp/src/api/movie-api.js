@@ -58,6 +58,17 @@ export const getWatchList = (userName) => {
  ).then(res => res.json());
 };
 
+export const removeWatchList = (userName, id) => {
+  return fetch(`/api/users/${userName}/watchList`, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': window.localStorage.getItem('token')
+      },
+      method: 'delete',
+      body: JSON.stringify({ id: id })
+  }).then(res => res.json())
+};
+
 export const addCollections = (userName, id) => {
   return fetch(`/api/users/${userName}/collections`, {
       headers: {

@@ -177,6 +177,20 @@ router.get('/:userName/watchList', passport.authenticate('jwt', {session: false}
   ).catch(next);
 });
 
+router.delete('/:userName/watchList', passport.authenticate('jwt', {session: false}), async (req, res, next) => {
+  const id = req.body.id;
+  const userName = req.params.userName;
+  const movie = await upcomingMovieModel.findByMovieDBId(id).catch(next);
+  const user = await User.findByUserName(userName);
+  const index = user.watchList.indexOf(movie._id);
+  if (index > -1) {
+    user.watchList.splice(index, 1);
+    await user.save(); 
+    res.status(200).send({message: `Deleted movie id: ${id}.`,status: 200});
+  }else{
+    res.status(404).send({message: `Unable to find movie with id: ${id}.`, status: 404});
+  }
+  });
 
 router.get('/:userName/userInfo', passport.authenticate('jwt', {session: false}), (req, res, next) => {
   const userName = req.params.userName;
