@@ -47,11 +47,6 @@ SECRET=JWTSecret
 ## API Design
 Give an overview of your web API design, perhaps similar to the following: 
 
-|作者|果冻虾仁|
-|---|---
-|知乎|[![zhihu-shield]][zhihu]
-|公众号|编程往事
-
 |   | GET | POST | PUT | DELETE |
 |---|---|---|---|---
 | /api/users |Gets a list of registered users | user login/registration | N/A | N/A 
