@@ -6,11 +6,11 @@ Name: Jiaqi Gu
 
 ...... A bullet-point list of the ADDITIONAL features you have implemented in the API **THAT WERE NOT IN THE LABS** ......,
  
- + Feature 1 - .... a statement of its purpose/objective ..... 
- + Feature 2 - .......
- + Feature 3 - ......
- + etc
- + etc
+ + Feature 1 - get upcoming movies, topRated movies 
+ + Feature 2 - get a set of movie actors' information
+ + Feature 4 - user can see their upcoming and topRated movies, and they can add upcoming /topRated movies to their watchList/collections, user can also delete movie from watchList
+ + Feature 5 - user can see their personal information and modify thir personal information.
+ + Feature 6 - get movie review and similar movies, get one actor's personal information and their performing movies. However, these APIs use TMDB APIs for some reasons(for example, to get similar movies, a large amount of movie data heve to be stored in database, which is difficult for me to ).
 
 ## Installation Requirements
 
@@ -47,10 +47,11 @@ SECRET=JWTSecret
 ## API Design
 Give an overview of your web API design, perhaps similar to the following: 
 
-|  |  GET | POST | PUT | DELETE
-| -- | -- | -- | -- | -- 
+|  |  GET | POST | PUT | DELETE |
+| -- | -- | -- | -- | -- |
 
-| /api/users |Gets a list of registered users | user login/registration | N/A | N/A |
+| /api/users | Gets a list of registered users | user login/registration | N/A | N/A |
+
 | /api/users/{userid} | N/A | N/A | update user _id | N/A |
 | /api/users/{userName}/favourites | get one user's all favourite movies | add one movie to the user's favourite | N/A | N/A |
 | /api/users/{userName}/collections | get all movies in one user's collections | add one movie to the user's favourite | N/A | N/A |
@@ -70,6 +71,7 @@ Give an overview of your web API design, perhaps similar to the following:
 | /api/people/{peopleid} |Gets a movie actors | N/A | N/A | N/A |
 | /api/people/{peopleid}/movies |Gets a list of the actor performed movies | N/A | N/A | N/A |
 
+| -- | -- | -- | -- | -- |
 | ... | ... | ... | ... | ... |
 
 [Swaggerhub](https://app.swaggerhub.com/apis/unano/WAD-assignment2/1.0.0).
@@ -296,6 +298,8 @@ export const getSimilarMovies = id => {
 ## Extra features
 
 . . Briefly explain any non-standard features, functional or non-functional, developed for the app.  
+
+I Use helmet to make Express apps more secure.
 
 ## Independent learning.
 
