@@ -47,32 +47,29 @@ SECRET=JWTSecret
 ## API Design
 Give an overview of your web API design, perhaps similar to the following: 
 
-|  |  GET | POST | PUT | DELETE |
-| -- | -- | -- | -- | -- |
+|作者|果冻虾仁|
+|---|---
+|知乎|[![zhihu-shield]][zhihu]
+|公众号|编程往事
 
-| /api/users | Gets a list of registered users | user login/registration | N/A | N/A |
-
-| /api/users/{userid} | N/A | N/A | update user _id | N/A |
-| /api/users/{userName}/favourites | get one user's all favourite movies | add one movie to the user's favourite | N/A | N/A |
+|   | GET | POST | PUT | DELETE |
+|---|---|---|---|---
+| /api/users |Gets a list of registered users | user login/registration | N/A | N/A 
+| /api/users/{userid} | N/A | N/A | update user _id | N/A 
+| /api/users/{userName}/favourites | get one user's all favourite movies | add one movie to the user's favourite | N/A | N/A 
 | /api/users/{userName}/collections | get all movies in one user's collections | add one movie to the user's favourite | N/A | N/A |
 | /api/users/{userName}/watchList | get all movies in one user's watchList | add one movie to the user's watchList | N/A | remove one moive from one user's watchList |
 | /api/users/{userName}/userInfo | get one user's personal info | N/A | modify one user's personal info | N/A |
-
 | /api/movies |Gets a list of movies | N/A | N/A |
 | /api/movies/upcoming |Gets a list of upcoming movies | N/A | N/A | N/A |
 | /api/movies/topRated |Gets a list of topRated movies | N/A | N/A | N/A |
 | /api/movies/{movieid} | Get a Movie | N/A | N/A | N/A
 | /api/movies/{movieid}/reviews | Get all reviews for movie | N/A | N/A | N/A |
 | /api/movies/{movieid}/similar | Get all similar movies for movie | N/A | N/A | N/A |
-
 | /api/genres |Gets a list of movie genres | N/A | N/A | N/A |
-
 | /api/people |Gets a list of movie actors | N/A | N/A | N/A |
 | /api/people/{peopleid} |Gets a movie actors | N/A | N/A | N/A |
 | /api/people/{peopleid}/movies |Gets a list of the actor performed movies | N/A | N/A | N/A |
-
-| -- | -- | -- | -- | -- |
-| ... | ... | ... | ... | ... |
 
 [Swaggerhub](https://app.swaggerhub.com/apis/unano/WAD-assignment2/1.0.0).
 
