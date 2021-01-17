@@ -6,7 +6,7 @@
         "description": "Persentations of all APIS in movies-api"
     },
     "host": "localhost:8080",
-    "basePath": "",
+    "basePath": "/",
     "securityDefinitions": {
         "JWT":{
         "type": "apiKey",
@@ -90,7 +90,7 @@
                     "200": {
                         "description": "OK",
                         "schema" :{
-                            "$ref": "#definitions/User"
+                            "$ref": "#/definitions/User"
                         }
                     },
                     "400": {
@@ -129,7 +129,7 @@
                         "required": true,
                         "description": "_id of the user",
                         "schema": {
-                            "$ref": "#definitions/User"
+                            "$ref": "#/definitions/User"
                         }
                     }
                 ],
@@ -423,7 +423,7 @@
                         "required": true,
                         "description": "user information",
                         "schema":{
-                            "$ref": "#definitions/UserInfo"
+                            "$ref": "#/definitions/UserInfo"
                         }
                     }
                 ],
@@ -452,7 +452,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#definitions/Movies"
+                            "$ref": "#/definitions/Movie"
                         }
                     }
                 }
@@ -469,7 +469,7 @@
                     "200": {
                         "description" : "OK",
                         "schema" :{
-                            "$ref": "#definitions/UpcomingMovie"
+                            "$ref": "#/definitions/UpcomingMovie"
                         }
                     }
                 }
@@ -486,7 +486,7 @@
                     "200": {
                         "description" : "OK",
                         "schema" :{
-                            "$ref": "#definitions/TopRatedMovie"
+                            "$ref": "#/definitions/TopRatedMovie"
                         }
                     }
                 }
@@ -595,7 +595,7 @@
                     "200": {
                         "description": "OK",
                         "schema": { 
-                            "$ref": "#definitions/People"
+                            "$ref": "#/definitions/People"
                         }
                     }
                 }
@@ -621,7 +621,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {  
-                            "$ref": "#definitions/People"
+                            "$ref": "#/definitions/People"
                         }
                     }
                 }
@@ -809,7 +809,7 @@
                 "userInfo":{
                     "type":"object",
                     "additionalProperties": {
-                        "$ref": "#definitions/UserInfo"
+                        "$ref": "#/definitions/UserInfo"
                     }
                 }
             }
