@@ -93,7 +93,7 @@ describe("Users endpoint", () => {
           username: "user1",
           password: "test1",
         })
-        // .expect(200)
+        .expect(200)
         .then((res) => {
           token= res.body.token;
         });
@@ -308,19 +308,18 @@ describe("Users endpoint", () => {
       });
     });
     describe("when the movie id doesn't exist", () => {
-      it("should return a 400 status and a error message", () => {
+      it("should return a 404 status and a error message", () => {
         return request(api)
           .post("/api/users/user1/favourites")
           .set("Authorization", token)
           .send({id:9999})
-          .expect(400)
+          .expect(404)
           .expect({ 
             "status": "fail",
             "message":"Movie not found."
           });
       });
     });
-    
 });
 
 
@@ -372,15 +371,54 @@ describe("Users endpoint", () => {
       });
     });
     describe("when the movie id doesn't exist", () => {
-      it("should return a 400 status and a error message", () => {
+      it("should return a 404 status and a error message", () => {
         return request(api)
           .post("/api/users/user1/watchList")
           .set("Authorization", token)
           .send({id:9999})
-          .expect(400)
+          .expect(404)
           .expect({ 
             "status": "fail",
             "message": "Movie not found."
+          });
+      });
+    });
+  });
+
+  describe("DELETE /:userName/watchList ", () =>{
+    beforeEach(async () => {
+      return request(api)
+          .post("/api/users/user1/watchList")
+          .set("Authorization", token)
+          .send({
+            id:sampleUpcomingMovie.id
+          })
+          .expect(201);
+    });
+    describe("when the movie id exist", () => {
+      it("should return a mesage about deleted movie id and a 200 status", () => {
+          return request(api)
+          .delete("/api/users/user1/watchList")
+          .set("Authorization", token)
+          .send({id:sampleUpcomingMovie.id})
+          .expect(200)
+          .expect({ 
+            "message": "Deleted movie id: 464052.",
+            "status": 200
+          });
+      });
+    });
+
+    describe("when the movie id doesn't exist", () => {
+      it("should return an erroe message and a 404 status", () => {
+        return request(api)
+          .delete("/api/users/user1/watchList")
+          .set("Authorization", token)
+          .send({id:12345})
+          .expect(404)
+          .expect({ 
+            "message": "Unable to find movie with id: 12345.",
+            "status": 404
           });
       });
     });
@@ -435,12 +473,12 @@ describe("Users endpoint", () => {
       });
     });
     describe("when the movie id doesn't exist", () => {
-      it("should return a 400 status and a error message", () => {
+      it("should return a 404 status and a error message", () => {
         return request(api)
           .post("/api/users/user1/collections")
           .set("Authorization", token)
           .send({id:9999})
-          .expect(400)
+          .expect(404)
           .expect({ 
             "status": "fail",
             "message": "Movie not found."

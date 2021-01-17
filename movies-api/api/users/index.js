@@ -97,7 +97,7 @@ router.post('/:userName/favourites', passport.authenticate('jwt', {session: fals
   if(!movie){
     const err = new Error(`Movie not found.`);
     err.status = 'fail';
-    err.statusCode = 400;
+    err.statusCode = 404;
     next(err);
   }
   const user = await User.findByUserName(userName);
@@ -128,7 +128,7 @@ router.post('/:userName/collections', passport.authenticate('jwt', {session: fal
   if(!movie){
     const err = new Error(`Movie not found.`);
     err.status = 'fail';
-    err.statusCode = 400;
+    err.statusCode = 404;
     next(err);
   }
   const user = await User.findByUserName(userName);
@@ -159,7 +159,7 @@ router.post('/:userName/watchList', passport.authenticate('jwt', {session: false
   if(!movie){
     const err = new Error(`Movie not found.`);
     err.status = 'fail';
-    err.statusCode = 400;
+    err.statusCode = 404;
     next(err);
   }
   const user = await User.findByUserName(userName);
@@ -181,13 +181,18 @@ router.delete('/:userName/watchList', passport.authenticate('jwt', {session: fal
   const id = req.body.id;
   const userName = req.params.userName;
   const movie = await upcomingMovieModel.findByMovieDBId(id).catch(next);
-  const user = await User.findByUserName(userName);
-  const index = user.watchList.indexOf(movie._id);
-  if (index > -1) {
-    user.watchList.splice(index, 1);
-    await user.save(); 
-    res.status(200).send({message: `Deleted movie id: ${id}.`,status: 200});
-  }else{
+  const user = await User.findByUserName(userName).catch(next);
+  if(movie){
+    const index = user.watchList.indexOf(movie._id);
+    if (index > -1) {
+      user.watchList.splice(index, 1);
+      await user.save(); 
+      res.status(200).send({message: `Deleted movie id: ${id}.`,status: 200});
+    }else{
+      res.status(404).send({message: `Unable to find movie with id: ${id}.`, status: 404});
+    }
+  }
+  else{
     res.status(404).send({message: `Unable to find movie with id: ${id}.`, status: 404});
   }
   });
