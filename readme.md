@@ -74,7 +74,12 @@ Give details of authentication/ security implemented on the API(e.g. passport/se
 
 I use the previous authentication, but I change the API that need to be authenticated to get access to. I remove the authentication for all routes in /movies, add I add authentication for all routes in users except POST of /users since I need to use this route to get key for authentication. So the following are all routes that need authentication:
 
-GET of /users;   GET & POST of /users/:userName/favourites; GET & POST of /users/:userName/favourites;   GET & POST of /users/:userName/collections;   GET & POST & DELETE of /users/:userName/watchList;   GET & PUT of /users/:userName/userInfo
+GET of /users;  
+GET & POST of /users/:userName/favourites; 
+GET & POST of /users/:userName/favourites;   
+GET & POST of /users/:userName/collections;   
+GET & POST & DELETE of /users/:userName/watchList;   
+GET & PUT of /users/:userName/userInfo
 
 ## Integrating with React App
 
@@ -291,20 +296,20 @@ export const getSimilarMovies = id => {
 
 . . Briefly explain any non-standard features, functional or non-functional, developed for the app.  
 
-I Use helmet to make Express apps more secure.
+I use helmet to make Express apps more secure.
 
 ## Independent learning.
 
 . . State the non-standard aspects of React/Express/Node (or other related technologies) that you researched and applied in this assignment . .  
 
-1. Swagger 
+>1. Swagger 
 
 I use Swagger to do API documentation.
 ![][swagger1]
 ![][swagger2]
 ![][swagger3]
 
-2. Mongoose Custom validation
+>2. Mongoose Custom validation
 
 I use Mongoose Custom validation to validate whether username length is between 3 and 15.
 
@@ -324,7 +329,7 @@ const UserSchema = new Schema({
 
 ~~~
 
-3. Nested document/subDocuments in Mongo/Mongoose
+>3. Nested document/subDocuments in Mongo/Mongoose
 
 UserInfoSchema is a subdocument of UserSchema.
 
@@ -353,7 +358,7 @@ const UserSchema = new Schema({
 
 ~~~
 
-4. Helmet, Morgan and new Error Handler
+>4. Helmet, Morgan and new Error Handler
 These are all covered in the video and I just use them.
 
 ~~~Javascript
