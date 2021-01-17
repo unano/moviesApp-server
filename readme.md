@@ -297,6 +297,7 @@ export const getSimilarMovies = id => {
 . . Briefly explain any non-standard features, functional or non-functional, developed for the app.  
 
 I use helmet to make Express apps more secure.
+I did substantial reactApp integration.
 
 ## Independent learning.
 
