@@ -42,7 +42,7 @@ describe("People endpoint", () => {
 
   describe("GET /people/:id", () => {
     describe("when the id is valid", () => {
-      it("should return the matching movie", () => {
+      it("should return the matching person", () => {
         return request(api)
           .get(`/api/people/${samplePerson.id}`)
           .set("Accept", "application/json")

@@ -90,14 +90,13 @@ describe("Users endpoint", () => {
     return request(api)
         .post("/api/users")
         .send({
-          username: "user1",
-          password: "test1",
+          username: "user2",
+          password: "test2",
         })
         .expect(200)
         .then((res) => {
           token= res.body.token;
         });
-
   });
   afterEach(() => {
     api.close();
