@@ -75,18 +75,18 @@ Give details of authentication/ security implemented on the API(e.g. passport/se
 I use the previous authentication, but I change the API that need to be authenticated to get access to. I remove the authentication for all routes in /movies, add I add authentication for all routes in users except POST of /users since I need to use this route to get key for authentication. So the following are all routes that need authentication:
 
 GET of /users;  
-GET & POST of /users/:userName/favourites; 
+PUT of /user/:id;
 GET & POST of /users/:userName/favourites;   
 GET & POST of /users/:userName/collections;   
 GET & POST & DELETE of /users/:userName/watchList;   
-GET & PUT of /users/:userName/userInfo
+GET & PUT of /users/:userName/userInfo;
 
 ## Integrating with React App
 
 Describe how you integrated your React app with the API. Perhaps link to the React App repo and give an example of an API call from React App. For example: 
 
 Since I move the assignment 1 folder into reactApp folder and do all integration and modification in it, it seemed that there is no need to attach a React App repoistory link here, and all the integration and modification can be seen in reactApp folder.
-I tried to create new API according to what functions I have realized in assignment1, and except from getGenres, all the following API call has been integrated with reactApp. Some API like /api/movies is easy to integrate and only need to do modification on files in api folder. Some API like login, signup, addWatchList, removeWatchList need to do modification on some other files, and I modified a lot of code when integrating login & signup since the original code completely can't support these two API. All the modification steps for integration can be seen in git history.
+I tried to create new API according to what functions I have realized in assignment1, and except from getGenres, all the following API call has been integrated with reactApp. Some API like /api/movies is easy to integrate and only need to do modification on files in api folder. Some API like login, signup, addWatchList, removeWatchList need to do modification on some other files, and I modified a lot of code when integrating login & signup since the original code completely can't support these two APIs. All the modification steps for integration can be seen in git history.
 
 ~~~Javascript
 export const login = (username, password) => {
@@ -304,7 +304,7 @@ I use helmet to make Express apps more secure.
 
 >1. Swagger 
 
-I use Swagger to do API documentation.
+I use Swagger to do API documentation. And all 
 ![][swagger1]
 ![][swagger2]
 ![][swagger3]
